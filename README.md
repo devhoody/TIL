@@ -20,6 +20,6 @@
 ### Git
 
 - [누구나 쉽게 이해할 수 있는 Git 입문](https://backlog.com/git-tutorial/kr/intro/intro1_1.html)
-- [김남윤님 TIL](https://github.com/mangdo/TIL)
+- [김남윤님 TIL](https://github.com/cheese10yun/TIL)
 - [초보몽키님 git 블로그](https://wayhome25.github.io/)
 - [망도님 TIL](https://github.com/mangdo/TIL)
