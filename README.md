@@ -2,16 +2,12 @@
 
 ## TIL
 
----
-
 - [230212](https://github.com/devhoody/TIL/blob/main/2302/230212.md)
 - [230213](https://github.com/devhoody/TIL/blob/main/2302/230213.md)
 - [230217](https://github.com/devhoody/TIL/blob/main/2302/230217.md)
 - [230319](https://github.com/devhoody/TIL/blob/main/2303/230319.md)
 
 ## 사이트 모음
-
----
 
 - [마크다운](https://github.com/mangdo/TIL/blob/main/ETC/markdown.md)
 - [고퀄리티 개발 컨텐츠 모음](https://github.com/Integerous/goQuality-dev-contents)
