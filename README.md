@@ -22,3 +22,7 @@
 - [김남윤님 TIL](https://github.com/cheese10yun/TIL)
 - [초보몽키님 git 블로그](https://wayhome25.github.io/)
 - [망도님 TIL](https://github.com/mangdo/TIL)
+
+### 오류해결
+
+- [[MacOS]SQL developer 데이터베이스 생성시 무한 로딩 해결](https://devmoony.tistory.com/111)
