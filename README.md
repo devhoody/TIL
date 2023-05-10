@@ -26,3 +26,5 @@
 ### 오류해결
 
 - [[MacOS]SQL developer 데이터베이스 생성시 무한 로딩 해결](https://devmoony.tistory.com/111)
+
+- [[VSCode]깃허브 푸쉬시 경고문 `"Can't push refs to remote. Try running "Pull" first to integrate your changes."` 해결](https://doozi316.github.io/errorlog/2019/09/30/error1/)
