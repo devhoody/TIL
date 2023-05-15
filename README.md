@@ -4,11 +4,14 @@
 > 찾기 쉽도록 저장하기  
 > 직접 타이핑하기
 
-### 사이트 모음
+### JAVA
 
-- [마크다운](https://github.com/mangdo/TIL/blob/main/ETC/markdown.md)
-- [고퀄리티 개발 컨텐츠 모음](https://github.com/Integerous/goQuality-dev-contents)
-- [노션 단축키 모음](https://apdl.tistory.com/entry/%EB%85%B8%EC%85%98-%EB%8B%A8%EC%B6%95%ED%82%A4)
+- [반복문](https://github.com/devhoody/TIL/blob/main/Java/%EB%B0%98%EB%B3%B5%EB%AC%B8.md)
+- [배열](https://github.com/devhoody/TIL/blob/main/Java/%EB%B0%B0%EC%97%B4.md)
+- [Print(), Write()](<https://github.com/devhoody/TIL/blob/main/Java/print()%2C%20write().md>)
+- [hasNext(), hasNextInt()](<https://github.com/devhoody/TIL/blob/main/Java/hasNext()%2C%20hasNextInt().md>)
+- [접근제어지시자](https://github.com/devhoody/TIL/blob/main/Java/%EC%A0%91%EA%B7%BC%EC%A0%9C%EC%96%B4%EC%A7%80%EC%8B%9C%EC%9E%90%20-%20public%2C%20private.md)
+- [참조형식과 호출되는 메소드 관계](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%B0%B8%EC%A1%B0%ED%98%95%EC%8B%9D%EA%B3%BC%20%ED%98%B8%EC%B6%9C%EB%90%98%EB%8A%94%20%EB%A9%94%EC%86%8C%EB%93%9C%20%EA%B4%80%EA%B3%84.md)
 
 ### 개발자의 자세
 
@@ -22,9 +25,20 @@
 - [김남윤님 TIL](https://github.com/cheese10yun/TIL)
 - [초보몽키님 git 블로그](https://wayhome25.github.io/)
 - [망도님 TIL](https://github.com/mangdo/TIL)
+- [남준님 TIL](https://github.com/namjunemy/TIL)
 
 ### 오류해결
 
 - [[MacOS]SQL developer 데이터베이스 생성시 무한 로딩 해결](https://devmoony.tistory.com/111)
 
 - [[VSCode]깃허브 푸쉬시 경고문 `"Can't push refs to remote. Try running "Pull" first to integrate your changes."` 해결](https://doozi316.github.io/errorlog/2019/09/30/error1/)
+
+### ETC
+
+- [플랫폼 단축키](https://github.com/devhoody/TIL/blob/main/etc/%ED%94%8C%EB%9E%AB%ED%8F%BC%20%EB%8B%A8%EC%B6%95%ED%82%A4.md)
+
+### 사이트 모음
+
+- [마크다운](https://github.com/mangdo/TIL/blob/main/ETC/markdown.md)
+- [고퀄리티 개발 컨텐츠 모음](https://github.com/Integerous/goQuality-dev-contents)
+- [노션 단축키 모음](https://apdl.tistory.com/entry/%EB%85%B8%EC%85%98-%EB%8B%A8%EC%B6%95%ED%82%A4)
