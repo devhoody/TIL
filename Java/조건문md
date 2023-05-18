@@ -1,0 +1,63 @@
+> 반복문은 코드의 길이를 줄여주는 방법 중 하나이다.
+
+> 반복문에는 `if, else-if, switch,` 등이 있다.
+
+> 공부하는 중에 학습한 것들을 지속해서 정리.
+
+# Switch문
+
+처리해야하는 경우의 수가 많을 때 유용한 조건문이다.
+
+여러 조건문을 수행하고자 할때, 우선 `else-if`문으로 구현해보고 그 다음으로 `switch`문으로 구현해보자.
+
+왜냐하면 Swtich의 조건식에는 `제약조건이 많다.`
+
+## Switch문의 제약조건
+
+1. 조건식의 결과가 `정수 또는 문자열`이어야 한다.
+2. case문의 값은 `정수, 상수(문자 포함), 문자열`만 가능하고, 중복되지 않아야 한다.
+
+```java
+int num, result;
+final int one = 1;
+
+switch(result) {
+	case '1' // 가능, 문자 리터럴
+	case one; // 가능, 정수 상수
+	case "YES" // 가능, 문자열 리터럴
+	case num; // 에러, 변수
+	case 1.0; // 에러, 실수
+}
+```
+
+## Switch문의 처리 과정
+
+1. 조건식을 계산한다.
+2. 조건식의 결과와 일치하는 case문으로 이동한다
+3. 이후의 문장들을 수행
+4. break문이나 switch문의 끝을 만나면 switch문 전체를 빠져나간다.
+
+\* **_switch문 작성시 break문을 빼먹지 않게 조심!_**
+
+## else-if문과의 차이점
+
+- 조건식 타입
+  - switch문 - 정수 , 문자열
+  - if문 - true or false
+- 조건식 처리 횟수
+  - switch문 - 1회
+  - if문 - else if문의 조건식을 포함하여 여러개
+
+## 실습 - 달의 최대 일수 구하기
+
+```java
+switch (month) {
+    case 2:
+        return 28;
+    case 4: case 6: case 9: case 11:
+        return 30;
+    default:
+        return 31;
+}
+
+```
