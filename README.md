@@ -2,7 +2,7 @@
 
 > 오늘 알게된 내용을 정리해두는 저장소  
 > 찾기 쉽도록 저장하기  
-> 직접 타이핑하기
+> 직접 작성하기
 
 ### JAVA
 
@@ -12,6 +12,8 @@
 - [hasNext(), hasNextInt()](<https://github.com/devhoody/TIL/blob/main/Java/hasNext()%2C%20hasNextInt().md>)
 - [접근제어지시자](https://github.com/devhoody/TIL/blob/main/Java/%EC%A0%91%EA%B7%BC%EC%A0%9C%EC%96%B4%EC%A7%80%EC%8B%9C%EC%9E%90%20-%20public%2C%20private.md)
 - [참조형식과 호출되는 메소드 관계](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%B0%B8%EC%A1%B0%ED%98%95%EC%8B%9D%EA%B3%BC%20%ED%98%B8%EC%B6%9C%EB%90%98%EB%8A%94%20%EB%A9%94%EC%86%8C%EB%93%9C%20%EA%B4%80%EA%B3%84.md)
+- [캡슐화](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%BA%A1%EC%8A%90%ED%99%94.md)
+- [클래스와 메서드](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%20%EB%A9%94%EC%84%9C%EB%93%9C.md)
 
 ### 개발자의 자세
 
@@ -42,3 +44,5 @@
 - [마크다운](https://github.com/mangdo/TIL/blob/main/ETC/markdown.md)
 - [고퀄리티 개발 컨텐츠 모음](https://github.com/Integerous/goQuality-dev-contents)
 - [노션 단축키 모음](https://apdl.tistory.com/entry/%EB%85%B8%EC%85%98-%EB%8B%A8%EC%B6%95%ED%82%A4)
+
+- [책 스터디방법 - 자바봄이 이펙티브 자바를 읽는 방법](https://javabom.tistory.com/70)
