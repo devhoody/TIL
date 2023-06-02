@@ -185,7 +185,7 @@ git switch -c 브랜치명
 git checkout -b 브랜치명
 ```
 
-# git merge
+## git merge
 
 - 서로 다른 branch에 있는 `파일을 서로 합병`하게 만드는 명령어
 - git은 협업에 유용한 툴로 팀원 각자 branch를 나누어 작업한 내용을 하나로 합치거나 수정이 필요할 때 유용하게 쓰인다.
@@ -193,6 +193,22 @@ git checkout -b 브랜치명
 
 ```
 git merge branch1
+```
+
+## git remove
+
+- 깃을 이용하여 파일을 삭제하는 명령어
+
+```
+git rm 파일명
+```
+
+## 커밋 메시지 수정
+
+- 커밋을 취소하지 않고 커밋 메시지를 수정할 수 있다.
+
+```
+git commit --amend -m "변경할 커밋메시지"
 ```
 
 # 커밋 메시지 작성법
