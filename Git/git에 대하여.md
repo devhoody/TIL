@@ -186,9 +186,13 @@ git switch -c 브랜치명
 git checkout -b 브랜치명
 ```
 
-### Branch가 위치한 현재 커밋 위치
+### branch -vv
 
-- `branch -vv`를 이용하면 현재
+- `git branch`를 이용하면 현재 저장소에 있는 branch 목록을 보여준다. `git branch -vv`를 이용하면 더 자세한 branch 정보를 나열한다.
+  1. branch 목록
+  2. 각 branch가 지정하고 있는 최신 commit 해시
+  3. 각 branch의 상위 branch - _계층 구조를 알기에 편리함_
+  4. branch와 연동해있는 원격 branch 이름 - _로컬 저장소와 원격 저장소의 연동 유무 확인에 용이_
 
 ```
 git branch -vv
