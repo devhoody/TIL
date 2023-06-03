@@ -174,6 +174,7 @@ git branch 브랜치명
 
 ```
 git chechout 브랜치명
+git switch 브랜치명
 ```
 
 ### Branch 생성과 전환을 한번에 하기
@@ -183,6 +184,14 @@ git chechout 브랜치명
 ```
 git switch -c 브랜치명
 git checkout -b 브랜치명
+```
+
+### Branch가 위치한 현재 커밋 위치
+
+- `branch -vv`를 이용하면 현재
+
+```
+git branch -vv
 ```
 
 ## git merge
@@ -203,7 +212,20 @@ git merge branch1
 git rm 파일명
 ```
 
-## 커밋 메시지 수정
+### git rm --cached
+
+- 파일을 커밋기록에서 삭제하거나 git의 추적 대상에서 제외시키는 명령어
+- git의 추적 대상에서는 삭제되나 작업 디렉토리에서는 삭제되지 않는다.
+- git rm --cached가 유용하게 사용되는 경우
+  1. 작업 디렉토리에서 파일을 삭제했으나 git이 여전히 해당 파일을 추적하는 경우
+  2. 커밋에 포함되지 말아야할 파일을 git이 추적하고 있는 경우(개인 설정 파일 등)
+  3. 이미 커밋에 포함된 파일을 git의 추적 대상에서 제외시켜야 하는 경우
+
+```
+git rm --cached 파일이름
+```
+
+## git commit amend
 
 - 커밋을 취소하지 않고 커밋 메시지를 수정할 수 있다.
 
