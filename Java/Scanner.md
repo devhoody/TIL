@@ -38,14 +38,53 @@ System.out.printf("입력된 나이: %d", age);
 
 - `한 줄의 문자열`을 입력받는다.
 - 개행 문자(줄바꿈) 이전까지의 모든 문자열을 읽는다.
+- 주의할점!
+  - 파일을 복사할때, NextLine()의 줄바꿈으로 인해 1줄이 더 추가된 상태로 복사가 된다. 이는 복사된 파일과 복사 대상 파일의 용량이 서로 다르게 저장되는 결과를 낳는다.
+  - NextLine은 해당 라인을 읽은 후에, `자동으로 커서가 줄바꿈이 된다.`
 
 ```java
-Scanner scanner = new Scanner(System.in);
+FileInputStream fis = new FileInputStream("읽어들일 파일명.data")
+Scanner fscan = new Scanner(fis);
+FileOutputStream fos = new FileOutputStream("생성할파일명.data")
 
-System.out.print("소개해주세요: ");
-String intro = scanner.nextLine();
+// hasNextLine을 이용하여 모든 문자열 입력받기
+while(fscan.hasNextLine())
+	{
+		String line = fscan.nextLine();
+		fout.print(line);
 
-System.out.printf("입력된 소개: %s", intro);
+		if(fscan.hasNextLine()) // if를 이용한 마지막 줄바꿈 방지
+			fout.println();
+	}
+
+```
+
+- `while(fscan.hasNextLine())`을 이용하여 모든 문자열을 입력받고 입력값이 없을때 false를 반환하도록 하여 반복을 중지한다.
+- `if(fscan.hseNextLine())`을 이용하여 마지막 문자열을 읽은 후, nextLine()의 자동줄바꿈 이후에는 읽어들일 문자열이 없게 되므로 false를 반환하며, if문 내의 명령은 제외된다. 따라서 줄바꿈을 수행하지 않고 생성할파일명의 마지막 줄바꿈을 방지할 수 있다.
+
+## hasNextLine()
+
+- 입력되는 `문자열의 유무에 따라 true or false`의 boolean형의 값을 반환하는 Scanner 클래스 내의 메소드이다.
+- 주의할 점은 hasNextLine()은 입력값을 반환하지 않으며 반한될 `문자열의 존재 유무만 확인이 가능`하다.
+- 더이상의 문자열이 존재하지 않을때까지 반복문을 수행할 때, 주로 사용된다.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("문자열을 입력하세요: ");
+        String input = scan.nextLine();
+
+        if (scan.hasNextLine()) {
+            System.out.println("다음 줄에 입력된 내용이 있습니다.");
+        } else {
+            System.out.println("다음 줄에 입력된 내용이 없습니다.");
+        }
+
+        scan.close();
+    }
+}
 ```
 
 ## FileInputStream, Scanner의 파일 입력
