@@ -55,6 +55,23 @@
     }
     ```
 
+## 연산자를 이용한 두 정수의 위치 바꾸기
+
+- 두 정수의 위치를 바꾸기위해서는 보통 임시변수를 이용하여 두 변수를 전환한다.
+- 연산자를 이용하면 임시변수를 선언하지 않고도 두 정수의 위치를 바꿀 수 있다.
+
+```java
+// nums[0] <-> nums[5]
+
+//덧셈 뺄셈 연산자 이용
+nums[0] = nums[0] + nums[5] -(nums[5] = nums[0]);
+// 곱셈 나눗셈 연산자 이용
+nums[0] = (nums[0] * nums[5]) / (nums[5] = nums[0]);
+
+// 확인
+System.out.printf("nums[0] : %d, nums[5] : %d", nums[0], nums[5]);
+```
+
 # 대입 연산자(assignment operator)
 
 | 연산자 종류 | 연산자 |
@@ -196,6 +213,35 @@ public static void main(String[] args) throws IOException {
 
 	}
 ```
+
+### 쉬프트 연산자와 &&, 16진수를 이용하여 byte단위 초기화하기
+
+- 비트맵 파일의 해상도를 출력하기위해 바이트 단위로 읽은 값을 나열하는 과정에서 배운 내용이다.
+- int n1~ n4를 이용하여 width값을 구해본다.
+
+```java
+FileInputStream fis = new FileInputStream("파일명.bmp")
+
+// read()를 이용한 byte 읽기
+n1 = fis.read();
+n2 = fis.read();
+n3 = fis.read();
+n4 = fis.read();
+
+// '<<'과 16진수와의 교집합을 이용한 바이트 초기화
+width = (n1 << 0) & 0x000000ff |
+    (n2 << 8) & 0x0000ff00 |
+    (n3 << 16)  & 0x00ff0000 |
+    (n4 << 24)  & 0xff000000 ;
+
+System.out.printf("width : %d\n",width);
+```
+
+- 해당 코드를 보면 byte를 나열할 때, 비트 쉬프트 연산자인 '<<'를 이용하는 걸 볼 수 있는데, 이는 byte가 bit로 구성되어 있어, n1을 제일 우측으로 해서 n4를 제일 좌측에 위치하도록 배열하는데 사용할 수 있다.
+  - 왜 8 배수로 이동?
+    - 1byte = 8bit로 1byte로 읽은 n1~n4를 각각 이동시키기위해선 bit를 8칸씩 이동시켜야한다.
+  - 그럼 '<<'만 써서 이동시키면 되지 않나? 왜 0x000000ff의 16진수와 교집합을 통해서 식을 구성할까?
+    - 1byte의 8bit중 `첫번째 bit는 부호비트`이다. 부호비트는 값이 양수인지 음수인지를 나타내는 값으로, 만약 byte가 이동할때 부호비트가 바뀐다면 음수로 변형되어 값이 완전히 바뀔 수 있는 위험성이 존재한다. 따라서 byte를 초기화할 필요가 있다.
 
 # 삼항 연산자(ternary operator)
 
