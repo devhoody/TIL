@@ -101,3 +101,69 @@ selector {
   </html>
   ```
 - 우선순위 : #id > .class > h1 이므로 h1태그의 속성값인 제목은 <style> 태그의 #id의 속성값인 빨간색으로 나타난다.
+
+# CSS 구조화
+
+- `Inline style`
+  - inline태그인 <style> 이용하는 방법
+  ```html
+  <p style="color : red"></p>
+  ```
+- `Internal stylesheet`
+  - html파일 내에 <head>내 <style> 이용하는 방법
+  - 현재 페이지만을 위한 스타일
+  ```html
+  <head>
+    <style>
+      p {
+        color: orange;
+      }
+    </style>
+  </head>
+  ```
+- `External stylesheet`
+  - 별도의 파일(.css)을 이용하는 방법
+  - 비슷한 스타일의 CSS을 이용한다면 중복을 제거하기 용이함.
+  ```css
+  p {
+    color: orange;
+  }
+  ```
+  - 실습
+    ```html
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
+    ```
+- 우선순위 : `Inline > Internal > External`
+
+## External stylesheet를 위한 두가지 방법
+
+### A방법 (html파일에 동시에 넣기)
+
+- style.css와 index.css 동시에 호출
+
+```html
+<link href="css/style.css" type="text/css" rel="stylesheet" />
+<link href="css/index.css" type="text/css" rel="stylesheet" />
+```
+
+### B방법 (CSS파일에 참조하여 넣기)
+
+- index.css ⇒ style.css 호출
+
+```css
+@import url(style.css);
+```
+
+- 참조하는 내용이 두개 정도이면 B방법을 하는 것이 좋다.
+
+## 스타일 적용 순서
+
+- _레이아웃 블록 스타일 - > 콘텐츠 블록 스타일 → 텍스트 스타일 → 콘텐츠 레이아웃_
+
+## top 섹션에 이름짓기
+
+- 초보자인 경우, 클래스마다 하나씩 확인후 다음 클래스를 지정할 필요가 있다.
+
+```css
+(1).header => (2) <header class ="header"></header> (3) .header{채우기}
+```
