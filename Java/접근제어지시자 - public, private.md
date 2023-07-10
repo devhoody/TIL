@@ -8,8 +8,6 @@ B캡슐은 데이터를 A에게 허락할지 말지 권한을 갖고 있다. 하
 
 접근 제어 지시자에는 `public, protected,private`가 있다.
 
-> 현재 공부한 내용은 public, private로 protected는 추후 추가할 예정
-
 # Public
 
 - 다른 클래스에서도 엑세스가 가능하다.
@@ -60,3 +58,28 @@ public class Person {
 이름, 성별 등은 공개되어도 되지만 카드번호나 CVC번호 등은 공개되면 안되는 정보이다.
 
 따라서, `이름, 나이, 성별 등의 공개 정보는 public`으로 선언하고 `신용카드 번호, CVC 번호 등의 비공개 정보는 private`로 설정하면 된다.
+
+# Protected
+
+- 외부에서 공유되지 않고 오로지 `같은 패키지나 자식 클래스`에게만 공유되어야 할 때 사용.
+- 같은 패키지가 아닌 자식 클래스에게만 공유되고자 한다면 주의해서 작성할 필요가 있다.
+
+```java
+// ExamConsole (추상클래스)
+public abstract class ExamConsole {
+
+  protected abstract void printEx(); //자식에게만 공유
+
+}
+
+// NewExamConsole (자식클래스)
+public class NewExamConsole extends ExamConsole {
+
+  @override
+  public void printEx() {
+    // printEx() 구현 내용
+  }
+}
+
+
+```
