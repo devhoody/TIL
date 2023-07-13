@@ -1,11 +1,5 @@
 # JavaScript
 
-> 본격적인 자바 공부에 앞서 기초적인 프론트엔드 지식을 학습하기위해 공부했다.
-
-> 공부에 참고한 강의 : 생활코딩의 [WEB2-JavaScript](https://opentutorials.org/course/3085)
-
-이 글에서는 생활코딩의 강의에 나온 내용을 학습하여 정리한다.
-
 ## 1. querySelector 메서드를 이용한 HTML 요소 선택
 
 ```JavaScript
