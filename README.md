@@ -4,6 +4,11 @@
 > 찾기 쉽도록 저장하기  
 > 직접 작성하기
 
+### CS
+
+- [3 Tier- Architecture](https://github.com/devhoody/TIL/blob/main/CS/3%20Tier-%20Architecture.md)
+- [Process, Thread](https://github.com/devhoody/TIL/blob/main/CS/Process%2C%20Thread.md)
+
 ### JAVA
 
 - [반복문](https://github.com/devhoody/TIL/blob/main/Java/%EB%B0%98%EB%B3%B5%EB%AC%B8.md)
