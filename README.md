@@ -4,7 +4,10 @@
 > 찾기 쉽도록 저장하기  
 > 직접 작성하기
 
-### CS
+### 자료구조
+- [ArrayList, LinkedList](https://github.com/devhoody/TIL/blob/main/CS/ArrayList%2C%20LinkedList.md)
+
+### 운영체제
 
 - [3 Tier- Architecture](https://github.com/devhoody/TIL/blob/main/CS/3%20Tier-%20Architecture.md)
 - [Process, Thread](https://github.com/devhoody/TIL/blob/main/CS/Process%2C%20Thread.md)
@@ -18,6 +21,9 @@
 - [접근제어지시자](https://github.com/devhoody/TIL/blob/main/Java/%EC%A0%91%EA%B7%BC%EC%A0%9C%EC%96%B4%EC%A7%80%EC%8B%9C%EC%9E%90%20-%20public%2C%20private.md)
 - [참조형식과 호출되는 메소드 관계](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%B0%B8%EC%A1%B0%ED%98%95%EC%8B%9D%EA%B3%BC%20%ED%98%B8%EC%B6%9C%EB%90%98%EB%8A%94%20%EB%A9%94%EC%86%8C%EB%93%9C%20%EA%B4%80%EA%B3%84.md)
 - [캡슐화](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%BA%A1%EC%8A%90%ED%99%94.md)
+- [상속](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%83%81%EC%86%8D.md)
+- [추상화](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%B6%94%EC%83%81%ED%99%94.md)
+- [인터페이스](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4.md)
 - [클래스와 메서드](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%20%EB%A9%94%EC%84%9C%EB%93%9C.md)
 
 ### FrontEnd
