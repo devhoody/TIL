@@ -291,7 +291,7 @@ alert(a); // 2 => 전역변수 a
 - 접근이 가능한 환경은 `클로저 함수가 선언된 위치`에 따라 결정된다. 이를 `“렉시컬 스코핑(Lexical Scoping)”` 이라고 한다.
 
 ```jsx
-var fClosuer = null;
+var fClosure = null;
 function f1() {
     var a= 1; // 아우터 변수
     a++;
@@ -300,14 +300,14 @@ function f1() {
         a++  //  f2밖에 있는 f1함수에 접근이 가능하다. => f2가 f1내부에 선언되었기 떄문.
         console.log("f2:" + a); 
     }
-    window.fClosuer = f2;
+    window.fClosure = f2;
 }
 
 f1(); // 2
 f1(); // 2
 f1(); // 2 // f1 함수 종료 => callstack에서 제거되어 f1함수 내에 있는 a값에 도달하기 힘들다.
-fClosuer(); // 3 // 근데 도달되쥬 ㅋ
-fClosuer(); // 4
+fClosure(); // 3 // 근데 도달되쥬 ㅋ
+fClosure(); // 4
 ```
 
 
