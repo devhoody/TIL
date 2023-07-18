@@ -23,7 +23,7 @@
   - [전역 변수의 특징](#전역-변수의-특징)
     - [var 유무에 대한 차이](#var-유무에-대한-차이)
   - [지역 변수의 특징](#지역-변수의-특징)
-  - [\*출처](#출처)
+  - [클로저(Closure)](#클로저closure)
 
 
 # 자바스크립트란?
@@ -217,8 +217,8 @@ console.log(add(2,3,4,5)) // 14
 ## 전역 변수의 특징
 
 - 전역 변수를 생성하는 방법에는 두가지가 있다.
-    - <script> 필드에서 var를 이용하여 전역변수 선언하는 방법
-    - `a=1` 로 선언과 동시에 값을 대입하는 방법
+  -  필드에서 var를 이용하여 전역변수 선언하는 방법
+  - `a=1` 로 선언과 동시에 값을 대입하는 방법
 - 자바스크립트도 `전역변수를 준비물`로 인식한다.
 
 ```jsx
@@ -243,14 +243,10 @@ console.log(a); // 1 출력
 
 ### var 유무에 대한 차이
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/85ae6527-d408-4418-a2f3-04e559a55426/Untitled.png)
-
 - `변수를 미리 준비하는 것`의 유무
 - 전역 공간에서의 선언은 곧 `window(전역) 객체의 속성`이 된다.
 - 위의 경우 var a; 에 의해 window안에는 a 함수가 존재하게 된다.
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8ddb2617-6bdf-487b-81d9-623bcd26a8e5/Untitled.png)
-    
+
 
 ## 지역 변수의 특징
 
@@ -288,10 +284,35 @@ var f1 = function() {
 alert(a); // 2 => 전역변수 a
 ```
 
-## *출처
+## 클로저(Closure)
 
-- https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/arguments
+- 자신이 포함하고있는 외부함수보다 `내부함수가 더 오래 유지`되는 경우, 외부함수 밖에서 내부 함수가 호출되더라도 `외부함수의 지역 변수에 접근이 가능`한 함수.
+- f2가 f1에서 선언되었을때, f1의 환경을 기억한 상태로 f1밖에서 호출되어도 그때의 환경을 기억하여 f1내의 변수를 사용할 수 있는 함수.
+- 접근이 가능한 환경은 `클로저 함수가 선언된 위치`에 따라 결정된다. 이를 `“렉시컬 스코핑(Lexical Scoping)”` 이라고 한다.
+
+```jsx
+var fClosuer = null;
+function f1() {
+    var a= 1; // 아우터 변수
+    a++;
+    console.log("f1:" + a)
+	    function f2(){   // 함수 f1안에서 f2가 선언되었다.
+        a++  //  f2밖에 있는 f1함수에 접근이 가능하다. => f2가 f1내부에 선언되었기 떄문.
+        console.log("f2:" + a); 
+    }
+    window.fClosuer = f2;
+}
+
+f1(); // 2
+f1(); // 2
+f1(); // 2 // f1 함수 종료 => callstack에서 제거되어 f1함수 내에 있는 a값에 도달하기 힘들다.
+fClosuer(); // 3 // 근데 도달되쥬 ㅋ
+fClosuer(); // 4
+```
+
 
 \*Reference
 
+- https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/arguments
 - https://www.allaboutlean.com/fifo-benefits/fifo-vs-lifo/
+- https://inpa.tistory.com/176
