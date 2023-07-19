@@ -18,6 +18,7 @@
   - [for-of](#for-of)
 - [Function](#function)
   - [함수 만드는 3가지 방법](#함수-만드는-3가지-방법)
+  - [JS 함수 선언 순서에 따른 적용 차이](#js-함수-선언-순서에-따른-적용-차이)
   - [함수 매개변수 특징](#함수-매개변수-특징)
     - [숫자 와  undefined 연산  ⇒ NaN](#숫자-와--undefined-연산---nan)
   - [전역 변수의 특징](#전역-변수의-특징)
@@ -166,6 +167,42 @@ function add(x,y){return x+y;};
 ```
 
 - *함수명이 add인 add()와 변수명인 add와 중복해서 사용할 수는 없다.*
+
+## JS 함수 선언 순서에 따른 적용 차이
+
+- 함수 선언시 가장 마지막에 정의한 내용이 적용된다.
+
+```jsx
+print(1); // 1, undefined
+		
+
+    function print(x) {
+        console.log(x);
+    }
+        
+    function print(x,y,z) {
+        console.log(x,y,z)
+    }
+
+    function print(x,y){
+        console.log(x,y)
+    }
+
+console.log("----------------")
+    
+    var func = function(x){
+        console.log(x)
+    }
+
+    var func = function(x,y,z){
+        console.log(x,y,z);
+    }
+
+    var func = function(x,y){
+        console.log(x + ", "+ y)
+    }
+    func(1); // 1, undefined
+```
 
 ## 함수 매개변수 특징
 
