@@ -7,6 +7,16 @@
     - [prototype이란?](#prototype이란)
     - [Prototype, 클래스에서의 상속간의 차이](#prototype-클래스에서의-상속간의-차이)
     - [사용예시](#사용예시)
+- [값과 형식의 비교](#값과-형식의-비교)
+  - [null, undefined](#null-undefined)
+    - [null](#null)
+    - [undefined](#undefined)
+  - [Instance of](#instance-of)
+    - [정수값](#정수값)
+    - [BigInt](#bigint)
+  - [인스턴스 관리하기](#인스턴스-관리하기)
+    - [Object prototypes](#object-prototypes)
+  - [prototype과 상속의 관계](#prototype과-상속의-관계)
 - [\* Reference](#-reference)
 
 
@@ -126,6 +136,118 @@ var exam5 = new Exam(2,2,2);
 var exam6 = new Exam(3,3,3);
 console.log(exam5.total === exam6.total) // 프로토타입의 total을 공유한다.
 ```
+
+# 값과 형식의 비교
+
+## null, undefined
+
+### null
+
+- reference 변수에 대해 `주소값이 없는 것`을 표현하기 위한 키워드
+- primitive 변수에는 null값을 대입할 수 없다.
+
+### undefined
+
+- 어떤 타입의 변수든 “값이 없다” 라는걸 표현
+
+## Instance of
+
+- 참조변수가 참조하고 있는 인스턴스의 타입을 알기위해 `instanceof 연산자`를 이용한다
+- 기본 변수는 typeof를 이용하면 된다.
+- 예시) 배열 타입 확인
+
+```jsx
+console.log(nums instanceof Array); // true
+console.log(Array.isArray(nums)); // true
+```
+
+### 정수값
+
+- integer의 최대값 : `MAX_SAFE_INTEGER`
+    - 이 이후의 숫자는 BigInt 이용
+
+### BigInt
+
+```jsx
+var x = 0n; // 정수값에 n을 붙임 
+```
+
+## 인스턴스 관리하기
+
+- 객체가 더이상 쓸모가 없어지면, null값을 대입해주어 조금 더 빨리 가비지를 통해 제거가 가능해진다.
+
+```jsx
+var arr = [1,2,3];
+
+// 쓸모 없어짐.
+arr = null; // null을 넣어줌으로써 가비지가 더 빨리 제거시킴
+```
+
+- 참조를 아무것도 하지않으면 가비지컬렉터가 제거해준다.
+- 객체 속성 앞에다가 delete하면 속성이 제거된다.
+
+```jsx
+delete arr;
+```
+
+### Object prototypes
+
+- 객체 상속 → 객체 공유
+    - 같은 객체를 공유한다.
+    
+    ```jsx
+    Exam.prototype // 생성자 이용
+    
+    var exam1 = new Exam();
+    
+    exam1.constructor.prototype; // 객체 이용 
+    exam1.__prototype__;
+    Object.getPrototypeOf(exam1) // Object객체 내 메소드 이용
+    
+    ```
+    
+- 객체 이용하여 prototype 객체 얻기
+
+```jsx
+console.log(newExam.__proto__); // kor : 2 eng : 2 math : 2 함수에 있는걸 
+console.log(Object.getPrototypeOf(newExam)); // kor : 2 eng : 2 math : 2
+console.log(NewlecExam.prototype); // kor : 2 eng : 2 math : 2
+```
+
+- 객체의 프로토타입에는 함수와 객체 모두 입력 가능하다.
+- 객체의 프로토타입을 설정하면 constructor가 변경된다.
+
+## prototype과 상속의 관계
+
+- prototype 내 값
+    
+    ```jsx
+    var base = {
+            kor : 10,
+            eng : 20,
+            math : 30
+        }
+    ```
+    
+- shadowing
+    - 부모에게 받은 값에 덮어씌우는것
+    
+    ```jsx
+     var exam = {
+            com : 10,
+            __proto__ : base
+        };
+    
+    exam.kor = 10; // exam내 kor 속성 생성, kor값 10 대입.
+    ```
+    
+- **Object.getPrototypeOf()**
+    - 지정된 객체의 프로토타입의 속성값을 반환한다.
+        - 내부[prototype] 속성값 반환
+    
+    ```jsx
+    getPrototypeOf(exam).kor = 4;
+    ```
 
 # \* Reference
 
