@@ -30,6 +30,8 @@
 
 - [CSS](https://github.com/devhoody/TIL/blob/1c5a09f2c6d13e642607080b2fa7a78a76c5a074/HTML%2CCSS%2CJS/CSS.md)
 - [JavaScript](https://github.com/devhoody/TIL/blob/1c5a09f2c6d13e642607080b2fa7a78a76c5a074/HTML%2CCSS%2CJS/JavaScript.md)
+- [JavaScript_OOP](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/JavaScript_OPP.md)
+- [JavaScript_Function](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/JS_Function.md)
 
 ### 개발자의 자세
 
