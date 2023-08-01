@@ -1,7 +1,15 @@
 # Class
-
-- 자바스크립트 ES6부터 자바와 같이 Class를 이용할 수 있게 되었다.
-- 자바스크립트의 캡슐화를 통해 객체 지향적인 코드를 지향하는데 class가 아주 유용하다.
+- [Class](#class)
+  - [Constructor](#constructor)
+  - [Strict Mode](#strict-mode)
+    - [Strict Mode 특징1 - 이전에 허용된 실수를 용납하지 않는다.](#strict-mode-특징1---이전에-허용된-실수를-용납하지-않는다)
+  - [은닉화](#은닉화)
+    - [캡슐화를 위한 보호모드](#캡슐화를-위한-보호모드)
+    - [Getters/ Setters 지원](#getters-setters-지원)
+    - [Static의 getter setter](#static의-getter-setter)
+  - [클래스 상속](#클래스-상속)
+    - [상속으로부터 받은 데이터를 확장하기(com 추가)](#상속으로부터-받은-데이터를-확장하기com-추가)
+    - [자식, 부모 클래스와 객체 간의 관계](#자식-부모-클래스와-객체-간의-관계)
 
 ## Constructor
 
