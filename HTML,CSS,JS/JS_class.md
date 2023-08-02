@@ -10,6 +10,14 @@
   - [클래스 상속](#클래스-상속)
     - [상속으로부터 받은 데이터를 확장하기(com 추가)](#상속으로부터-받은-데이터를-확장하기com-추가)
     - [자식, 부모 클래스와 객체 간의 관계](#자식-부모-클래스와-객체-간의-관계)
+  - [ball.js 클래스 적용하기](#balljs-클래스-적용하기)
+    - [ES6 이전에 귀찮은점](#es6-이전에-귀찮은점)
+  - [ES6 모듈 시스템](#es6-모듈-시스템)
+    - [export 키워드](#export-키워드)
+    - [모듈화된 두 스크립트 내의 기능의 이름이 같을 경우](#모듈화된-두-스크립트-내의-기능의-이름이-같을-경우)
+    - [default](#default)
+    - [import에 기능이 많아져 이름을 붙이기 귀찮을때는 \* 을 이용.](#import에-기능이-많아져-이름을-붙이기-귀찮을때는--을-이용)
+    - [단순히 다른 js파일에 있는 데이터를 읽고 싶을때. (이용x)](#단순히-다른-js파일에-있는-데이터를-읽고-싶을때-이용x)
 
 ## Constructor
 
@@ -221,3 +229,94 @@ Object.hasOwn(obj, prop);
 ```
 
 - *for in을 이용하여 key값을 꺼내면 #이 아닌 값들만 나온다.*
+
+## ball.js 클래스 적용하기
+
+- 은닉화 한번에 적용하기 ⇒ 일괄 텍스트 변경 기능 이용하기
+  - `this. ⇒ this.#`
+
+### ES6 이전에 귀찮은점
+
+1. 여러 자바스크립트 파일을 이용해야하는데 충돌날 가능성이 있다.
+2. 기존에는 index.html에 script의 파일을 등록해주어야한다. 
+
+```jsx
+<script src="Ball.js" defer></script>
+```
+
+- 각 파일끼리 충돌을 방지하고 고립화하기 위한 모듈 시스템이 필요하다.
+
+## ES6 모듈 시스템
+
+- 이름충돌이 안나도록 이용할 자바스크립트 파일을 넣는 것을 html에게 맡긴다.
+
+```jsx
+<script type="module" src="game.js" defer></script>
+```
+
+### export 키워드
+
+- 노출하고 싶은 기능을 `export`써서 노출시킨다.
+    - 해당 기능은 작성한 자바스크립트 파일안에서 작성!
+    - 기능 이름은 그대로 작성한다.
+- 안그러면 일반적으로 자바스크립트 내의 기능은 숨겨져 있는 기능으로 되어있음. ⇒ 고립화!
+- 기본 양식 2개
+    - **기능을 구현하고 따로 export 문을 작성하여 export한다.**
+        
+        ```jsx
+        function test() {}
+        function test1() {}
+        
+        export {test, test1};
+        ```
+        
+    - **기능 구현 시 export 키워드를 붙여 export한다.**
+        - import를 할때 원하는 이름을 붙이기위해 `as` 를 쓰지만, `default`를 붙이면 as를 쓰지 않고도 자신이 원하는 이름으로 기능명을 사용할 수 있다.
+        
+        ```jsx
+        export dafault function test() {} // import시 바로 원하는 이름으로 작성
+        export function test1() {} // import시 as를 이용하여 원하는 이름으로 이용
+        
+        // import문
+        import aa, { test1, test2 } from './module/lib2.js';
+        ```
+        
+- 내보내고(export)⇒  받는다.(import)
+- 객체나 함수 이외에도 다양한 형식도 노출이 가능하다.
+
+### 모듈화된 두 스크립트 내의 기능의 이름이 같을 경우
+
+- 기능의 이름을 import에서  `as` 를 이용해 바꿔주어야한다.
+
+```jsx
+import { test as lib1Test, test1 as lib1Test1 } from './module/lib1.js';
+import { test, test1 } from './module/lib2.js';
+import { Ball } from './ball.js';
+```
+
+### default
+
+- `as를 이용하지않고` 원하는 기능 이름을 사용하게 만들어줌
+
+```jsx
+import { test as lib1Test, test1 as lib1Test1 } from './module/lib1.js';
+import aa, { test1, test2 } from './module/lib2.js';
+import { Ball } from './ball.js';
+```
+
+### import에 기능이 많아져 이름을 붙이기 귀찮을때는 * 을 이용.
+
+- `import * as JS파일명` 을 이용해 해당 js파일 내에 존재하는 export들을 꺼낸다.
+- 해당 기능들을 이용할 때에는 객체지향처럼 `js파일명.기능` 으로 호출할 수 있다.
+
+```jsx
+import * as lib1 from './module/lib1.js';
+
+lib1.test();
+console.log(lib1.data.x);
+```
+
+### 단순히 다른 js파일에 있는 데이터를 읽고 싶을때. (이용x)
+
+- 모든 모듈들이 공유하고 있는 객체(window객체)를 이용해서 단순히 읽는다.
+- 자바스크립트 파일에서의 let으로 선언된 변수는 모든 모듈들이 공유하고있는 window객체로 들어가지 않음.
