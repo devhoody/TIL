@@ -249,3 +249,108 @@ UPDATE MEMBER SET PWD=’111’, NAME='홍길동' WHERE ID='NEWLEC'; // WHERE를
 DELETE MEMBER;
 DELETE MEMBER WHERE ID=33;
 ```
+
+
+## ROWNUM , 행 제한하기 - 페이지 별 출력하기
+
+- ROWNUM은 `SQL실행 결과의` 각 행마다 붙여지는 `일련번호`
+- ROWNUM을 이용해서 한 페이지에 보이는 행의 개수를 제한할 수 있다.
+
+### 1페이지, 2페이지 출력하기
+
+- 1페이지(ROWNUM 1~5)의 경우, 정상적으로 출력.
+- 2페이지(ROWNUM 6~10)의 경우, BETWEEN을 써도 ROWNUM이 생성되지 않는다.
+    
+    <img width="1609" alt="스크린샷 2023-08-12 오후 4 02 30" src="https://github.com/devhoody/TIL/assets/124743189/d76a38b0-4b9e-47c0-a519-f130eeebd98b">
+    
+    - 해당 그림처럼 조회될 때, ROWNUM은 1부터 시작하지만, 조건이 `ROWNUM>5 인 경우, ROWNUM =1에 해당하지 않기 떄문`에 테이블에서 해당 행을 조회할 수 없게된다.
+    
+    ```sql
+    SELECT * FROM MEMBER WHERE ROWNUM BETWEEN 1 AND 5; // 조회 O
+    SELECT * FROM MEMBER WHERE ROWNUM BETWEEN 6 AND 10; // 조회 X
+    ```
+    
+    - BETWEEN을 통한 예시
+        
+        <img width="626" alt="스크린샷 2023-08-12 오후 3 45 48" src="https://github.com/devhoody/TIL/assets/124743189/89bca4f5-04c0-4f6b-abc9-788c9b18489d">
+        
+        1페이지 조회
+        
+        <img width="667" alt="3" src="https://github.com/devhoody/TIL/assets/124743189/7412e68f-0a8e-4661-b4f4-e7e406d874a7">
+
+        
+        2페이지 조회 
+        
+
+> **그럼 어떻게 2페이지를 출력할까?**
+> 
+
+<img width="984" alt="4" src="https://github.com/devhoody/TIL/assets/124743189/b307016c-c9d9-4416-9cd6-469cba108e3f">
+
+
+- *FROM 절에는 `격자형데이터` 형식이라면 모두 불러올 수 있다.*
+
+
+**STEP1) FROM절 완성하기**
+
+**STEP2) SELECT절 완성하기**
+
+**STEP3) FROM절과 WHERE절의  ROWNUM 연결하기**
+
+- ROWNUM과 *을 동시에 조회하는건 불가능하다.
+    - 왜? ⇒ ***은 모든 것**을 뜻하는 것이므로 **ROWNUM까지 이미 포함**된 것이기 때문.
+    - 그래서 NOTICE.*을 이용하여 NOTICE 안에 있는 모든 열을 지칭하는 의미로 바꿔주어야 한다.
+- **소괄호() → 먼저 실행되는 쿼리, `서브쿼리`**
+
+```sql
+SELECT * FROM (SELECT ROWNUM, NOTICE.* FROM NORICE) // ()안의 구문 먼저 실행.
+```
+
+- WHERE 조건절에서 ()구문 안의 ROWNUM을 이용해야 하기 때문에, `별칭을 이용`하여 해당 열과 연결시켜주어야한다.
+
+```sql
+SELECT * FROM (SELECT ROWNUM NUM, NOTICE.* FROM NORICE) 
+WHERE NUM BETWEEN 6 AND 10;// NUM 별칭을 이용하여 ROWNUM 연결.
+```
+
+- MEMBER 테이블을 이용한 실습
+    
+    STEP1 ) FROM절 완성하기
+    
+    ```sql
+    SELECT ROWNUM, MEMBER.* FROM MEMBER
+    ```
+    
+    STEP2) SELECT절 완성하기
+    
+    ```sql
+    // 1페이지
+    SELECT * FROM (SELECT ROWNUM, MEMBER.* FROM MEMBER) WHERE ROWNUM BETWEEN 1 AND 5;
+    // 2페이지
+    SELECT * FROM (SELECT ROWNUM, MEMBER.* FROM MEMBER) WHERE ROWNUM BETWEEN 6 AND 10;
+    ```
+    
+    STEP3) FROM절과 WHERE절의 ROWNUM 연결하기
+    
+    ```sql
+    // 1페이지
+    SELECT * FROM (SELECT ROWNUM NUM, MEMBER.* FROM MEMBER) WHERE NUM BETWEEN 1 AND 5;
+    // 2페이지
+    SELECT * FROM (SELECT ROWNUM NUM, MEMBER.* FROM MEMBER) WHERE NUM BETWEEN 1 AND 5;
+    ```
+    
+
+- 결과
+    - 1페이지(ROWNUM 1~5)
+        
+        <img width="972" alt="5" src="https://github.com/devhoody/TIL/assets/124743189/7ca90272-09b0-4093-a8d3-6bd6eac23e1b">
+        
+    - 2페이지(ROWNUM 6~10)
+        
+        <img width="957" alt="6" src="https://github.com/devhoody/TIL/assets/124743189/aa833270-f2e1-490f-a617-ed80e79a26d3">
+
+        
+
+### Reference*
+
+https://youtu.be/ekEBoJn2gF8
