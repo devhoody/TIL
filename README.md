@@ -37,6 +37,7 @@
 
 ### Servlet
 - [Servlet](https://github.com/devhoody/TIL/blob/main/Servlet/Servlet.md)
+- [JSP](https://github.com/devhoody/TIL/blob/main/Servlet/JSP.md)
 
 ### FrontEnd
 
