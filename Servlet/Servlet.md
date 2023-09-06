@@ -10,6 +10,16 @@
     - [화면에 서블릿 출력하기](#화면에-서블릿-출력하기)
     - [주의사항](#주의사항)
   - [이클립스에 톰캣 설정하기(mybatisapp)](#이클립스에-톰캣-설정하기mybatisapp)
+  - [form을 이용한 request](#form을-이용한-request)
+    - [action](#action)
+    - [name](#name)
+    - [예시](#예시)
+  - [페이지 기능 추가하기](#페이지-기능-추가하기)
+    - [객관식 or 주관식 문항을 둘 중 하나만 출력하기](#객관식-or-주관식-문항을-둘-중-하나만-출력하기)
+    - [쿼리스트링 중복하여 사용하기](#쿼리스트링-중복하여-사용하기)
+    - [주관식 유지하기](#주관식-유지하기)
+    - [객관식 유지하기](#객관식-유지하기)
+    - [객관식, 주관식 버튼 만들기](#객관식-주관식-버튼-만들기)
 
 
 # Servlet(Server Application Let)
@@ -137,3 +147,74 @@ public void service(HttpServletRequest request, HttpServletResponse response)
     
 - maven update하면 webapp 폴더 생성
 - war로 패키징하면 webapp에 있는 것(정적인문서)들이 옮겨진다 = 배포
+
+## form을 이용한 request
+
+- 쿼리스트링으로 전달해주는 역할- form
+
+### action
+
+- 연결해줄 서블릿을 정해주는 예약어
+
+### name
+
+- 담을 **쿼리스트링**을 정해주는 예약어
+
+### 예시
+
+```html
+<form action="index">
+	<label>갯수입력</label><input type="text" name="s">
+	<input type="submit" value="요청">
+</form>
+```
+
+## 페이지 기능 추가하기
+### 객관식 or 주관식 문항을 둘 중 하나만 출력하기
+
+- type을 이용해서 창을 나눈다.
+
+### 쿼리스트링 중복하여 사용하기
+
+- 쿼리스트링 사이에 `&` 을 이용해서 url을 작성한다.
+- **hidden타입**
+    - hidden을 이용해서 특정 쿼리스트링의 값을 유지할 수 있다.
+        
+        ```html
+        <input type=\"hidden\" name=\"t\" value=\"2\">
+        ```
+        
+
+### 주관식 유지하기
+
+```java
+else if (type == 2) {
+			out.write("<h2>인삿말을 몇 번 듣고 싶으세요?</h2>");
+			out.write("<form action=\"index\">");
+			out.write("	<label>갯수입력</label><input type=\"text\" name=\"s\">");
+			out.write("	<input type=\"hidden\" name=\"t\" value=\"2\">");
+			out.write("	<input type=\"submit\" value=\"요청\">");
+			out.write("</form>");
+		}
+```
+
+### 객관식 유지하기
+
+```java
+if (type == 1) {
+			out.write("<hr>");
+			out.write("<h2>인삿말을 몇 번 듣고 싶으세요?</h2>");
+			out.write("<a href=\"/index?s=1\">1번</a><br>");
+			out.write("<a href=\"/index?s=5\">5번</a><br>");
+			out.write("<a href=\"/index?s=10\">10번</a><br>");
+			out.write("<a href=\"/index?s=100\">100번</a>");
+			out.write("<hr>");
+		}
+```
+
+### 객관식, 주관식 버튼 만들기
+
+```java
+out.write("<a href=\"/index?t=1\">객관식</a><br>");
+out.write("<a href=\"/index?t=2\">주관식</a><br>");
+```
