@@ -1,0 +1,172 @@
+- [MVC](#mvc)
+  - [Model](#model)
+  - [View](#view)
+    - [Controller](#controller)
+  - [MVC-EL](#mvc-el)
+  - [tag Library(action tag)](#tag-libraryaction-tag)
+- [MVC 2단계](#mvc-2단계)
+  - [Controller](#controller-1)
+  - [View](#view-1)
+  - [Forwarding](#forwarding)
+
+
+# MVC
+
+- **mvc란?**
+    - 필요한 데이터들을 미리 뽑아놔서 출력하는 방식으로 Model, View, Controller로 나누어 코드를 작성하는 데이터 출력 방법
+- **mvc를 사용하는 이유**
+    - 스파게티 코드가 되는 것을 방지하기 위함.
+- **mvc를 사용하는 방법**
+    - Model, View, Controller로 나누어 작성한다.
+
+## Model
+
+- model이란?
+    - 애플리케이션이 포함해야할 데이터
+
+## View
+
+- view란?
+    - 애플리케이션이 데이터를 보여주는 방식
+- List.jsp
+    
+    ```java
+    <%@ page language="java" contentType="text/html; charset=UTF-8"
+        pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    </head>
+    <body>
+    	<h1>메뉴목록</h1>
+    	<ul>
+    	<c:forEach var="m" items="${list}">
+    	<li><a href="detail.jsp?id=${m.id}">${m.korName}</a>(${m.engName})</li>
+    	</c:forEach>
+    	
+    <!-- 	<hr> -->
+    <%--  <%-- JSP-EL사용 --> 
+    	<% for(Menu m : list) { 
+    		pageContext.setAttribute("m",m);
+    	%>
+    		<li><a href="detail.jsp?id=${m.id}">${m.korName}</a>(${m.engName})</li>
+    	<% 
+    	} %> --%>
+    	</ul>
+    </body>
+    </html>
+    ```
+    
+
+### Controller
+
+- controller란?
+    - 애플리케이션의 사용자로부터 입력에 대한 반응 방식
+- ListController
+    
+    ```java
+    package kr.co.rland.web.controller.menu;
+    
+    import java.io.IOException;
+    import java.util.List;
+    
+    import org.apache.ibatis.session.SqlSession;
+    import org.apache.ibatis.session.SqlSessionFactory;
+    
+    import jakarta.servlet.ServletContext;
+    import jakarta.servlet.ServletException;
+    import jakarta.servlet.annotation.WebServlet;
+    import jakarta.servlet.http.HttpServlet;
+    import jakarta.servlet.http.HttpServletRequest;
+    import jakarta.servlet.http.HttpServletResponse;
+    import kr.co.rland.web.entity.Menu;
+    import kr.co.rland.web.repository.MenuRepository;
+    
+    @WebServlet("/menu/list")
+    public class ListController extends HttpServlet {
+    	@Override
+    	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    
+    		ServletContext application = req.getServletContext();
+    		SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) application.getAttribute("SqlSessionFactory");
+    
+    		SqlSession sqlSession = sqlSessionFactory.openSession();
+    		MenuRepository repository = sqlSession.getMapper(MenuRepository.class);
+    		List<Menu> list = repository.findAll();
+    
+    		req.setAttribute("list", list);
+    
+    		req.getRequestDispatcher("/WEB-INF/view/menu/list.jsp").forward(req, resp);
+    	}
+    }
+    ```
+
+## MVC-EL
+    
+-  `${}`
+    
+    ```java
+    // controller
+    long id = Long.parseLong(request.getParameter("id"));
+    Menu m = repository.findById(id);
+    
+    pageContext.setAttribute("m", m);
+    
+    // view
+    <dt>메뉴이름</dt>
+    <dd>${m.korName}(${m.engName})</dd>
+    ```
+    
+## tag Library(action tag)
+    
+- **tag Library(action tag)란?**
+    - 행위를 갖고 있는 jsp 내장 태그 라이브러리
+- **tag Library을 쓰는 이유**
+    - **`지금은 쓰지 않는다. 왜?` ⇒** 원래도 스파게티코드인데 액션 태그로 인해 더 코드 구성이 꼬이게된다. → MVC에 적합하지 않음.
+  - **tag Library를 어떻게 쓰는가?**
+    - **for태그만들기**
+        - \<tag>를 이용
+        - ForTag(인터페이스)나 그 상위 추상클래스를 오버라이드해서 사용한다.
+- `<jsp(식별자):태그명>`
+- 일반 태그는 내가 감싸고 있는게 무엇이다. 라는  what을 의미하는 것이지 행위를 갖고 있지 않다.
+- 브라우저의 개발자도구에서는 안보임 → 재스퍼가 사용하는 태그기 때문에.
+- 이런 태그 라이브러리를 만들어야하기 때문에 관련 태그가 분산되어 불편함. → JSTL을 구성하여 표준 라이브러리를 사용하게 됌.
+
+# MVC 2단계
+
+- Controller와 View를 각각 파일로 나누어 작성하는 단계
+
+## Controller
+
+- view로 pageContext 전달하기
+    - Application으로 담아서 전달
+    - Session으로 담아서 전달
+    - Request로 담아서 전달 : 둘 사이에서만 공유할 수 있는 저장소 ←- 채택!
+- Request로 담아서 전달
+    
+
+## View
+
+- view는 Controller에서만 호출이 가능해야한다.
+- 사용자가 호출안되기때문에 view 파일은 홈디렉토리가 아닌 WEB-INF 디렉토리에 넣자.
+
+## Forwarding
+
+- **forwarding이란?**
+    - 요청받는 페이지를 출력 페이지로 반환시켜주는 것
+- **forwarding을 쓰는 이유**
+    - forwarding을 씀으로 인해서 MVC ver2단계인 controller와 view를 분리한 상태에서 연결을 할 수 있다.
+- **forwarding을 쓰는 방법**
+    - Servlet에서의 방법
+        - forward하는 서블릿과 리퀘스트,리스폰을 공유한다.
+        - 경로 : 홈디렉토리부터 시작 - **"/WEB-INF/view/menu/list.jsp"**
+    
+    ```java
+    req.getRequestDispatcher("/WEB-INF/view/menu/list.jsp").forward(req, resp);
+    ```
+    
+- 모든 웹 플랫폼이 갖고있는 기능
