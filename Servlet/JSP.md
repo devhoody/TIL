@@ -9,6 +9,9 @@
     - [\<%= %\>](#-)
     - [\<%! %\>](#--1)
     - [\<%@ %\>](#--2)
+  - [JSPL](#jspl)
+    - [JSP표준 태그 중 를 이용한 반복문 실행하기](#jsp표준-태그-중-를-이용한-반복문-실행하기)
+  - [\<%— , ←-](#---)
 
 
 # JSP
@@ -247,3 +250,33 @@ public void print(int a, int b) {
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 ```
+
+## JSPL
+
+- **JSPL이란?**
+    - JSP 태그 표준 라이브러리로  Core, Formating, Functions 등의 종류로 나누어진다.
+- **JSPL을 사용하는 이유**
+    - 기존 JSP 태그 생성에서 태그들이 많이 꼬이기 시작하면서 불편을 느낌
+- **JSPL 사용 방법**
+    - maven : JSPL Library를 pom.xml에 붙여넣는다.
+  - 데이터를 가져올 때 표현방법이 다르게 될 경우, `View에서 처리`한다. → Formating
+
+### JSP표준 태그 중 <foreach>를 이용한 반복문 실행하기
+
+- items에 정의된 값은 m 변수에 문자열 그대로 들어가기때문에, 변수명이 아니라 ${}를 같이 씀으로인해 값을 꺼내서 주어야 한다.
+
+```java
+<c:forEach var="m" items="${list}"> // list(x) ${list} (o)
+	<li><a href="detail.jsp?id=${m.id}">${m.korName}</a>(${m.engName})</li>
+</c:forEach>
+```
+
+**이제부터는 view에는 JSTL과 EL로만 만들도록한다.**
+
+## <%— , ←-
+
+- **<%—**
+    - `서버단`에서의 주석
+    - **재스퍼가 읽지 않는다.**
+- **←-**
+    - `클라이언트단`에서의 주석
