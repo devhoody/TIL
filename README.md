@@ -53,6 +53,9 @@
 - [JavaScript_class](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/JS_class.md)
 - [JavaScript_Image](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/JS_Image.md)
 
+### CS
+- [InfraArchitecture](https://github.com/devhoody/TIL/blob/main/CS/InfraArchitecture.md)
+
 ### 개발자의 자세
 
 - [70세까지 개발자로 사는 법](https://okky.kr/articles/1430828)
