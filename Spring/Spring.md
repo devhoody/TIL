@@ -3,17 +3,17 @@
     - [설정방법 실습](#설정방법-실습)
   - [@ComponentScan, @CompononetScans](#componentscan-compononetscans)
   - [@AutoWired](#autowired)
-  - [어노테이션의 객체 계층 구분](#어노테이션의-객체-계층-구분)
-    - [@Controller, @Service, @Repository](#controller-service-repository)
   - [xml + 어노테이션](#xml--어노테이션)
     - [dao나 service의 중복 제거](#dao나-service의-중복-제거)
-  - [소스코드 없이 bean 객체 생성하기](#소스코드-없이-bean-객체-생성하기)
+  - [스프링 빈과 의존관계](#스프링-빈과-의존관계)
+    - [컴포넌트 스캔과 자동 의존관계 설정 @Controller, @Service, @Repository](#컴포넌트-스캔과-자동-의존관계-설정-controller-service-repository)
+    - [소스코드 없이 자바 코드를 이용하여 bean 객체 생성하기](#소스코드-없이-자바-코드를-이용하여-bean-객체-생성하기)
   - [Spring을 이용한 hello 페이지 구현](#spring을-이용한-hello-페이지-구현)
     - [**ResponseBody**](#responsebody)
     - [**requestMapping**](#requestmapping)
   - [Spring을 이용한 쿼리스트링 값 받기](#spring을-이용한-쿼리스트링-값-받기)
   - [Spring을 이용한 View 구현하기](#spring을-이용한-view-구현하기)
-
+    
 # Spring
 
 - 스프링이란?
@@ -83,11 +83,6 @@
     ```
     
 
-## 어노테이션의 객체 계층 구분
-
-### @Controller, @Service, @Repository
-
-- Component의 종류로 Controller와 Service, Repository 각각에 맞게 Annotation으로 사용한다.
 
 ## xml + 어노테이션
 
@@ -120,10 +115,22 @@
     <context:component-scan base-package="com.newlecture.spring"/>
     ```
     
-## 소스코드 없이 bean 객체 생성하기
+## 스프링 빈과 의존관계
+- 스프링 컨테이너에 Bean을 등록하기 위해 아래 두 가지 방식이 존재한다.
 
-- 소스코드가 없거나 bean을 생성할 경우, `@configuration`을 이용
-- `@configuration` : @component중의 종류 하나
+### 컴포넌트 스캔과 자동 의존관계 설정 @Controller, @Service, @Repository
+
+- Component의 종류로 Controller와 Service, Repository 각각에 맞게 Annotation으로 사용한다.
+  - 정형화된 객체의 경우에만 위의 3가지 Component사용이 가능하다.
+  - 
+
+
+### 소스코드 없이 자바 코드를 이용하여 bean 객체 생성하기
+
+- 소스코드가 없어 직접 자바코드를 이용하여 bean을 생성할 경우, `@Configuration` , `@Bean`을 이용
+- `@Configuration` : @component중의 종류 하나
+- 실무에서는 정형화된 Controller, Service, Repository 같은 코드는 컴포넌트 스캔을 사용한다. 하지만, 정형화되지 않거나, 상황에 따라 구현 클래스를 변경해야하면 설정을 통해 스프링 빈으로 등록한다.
+  - *구현클래스 변경? -> 나중에 레포지토리만 갈아 끼우기 위한 방법*
 
 ```java
 @Configuration
