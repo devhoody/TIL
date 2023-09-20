@@ -44,6 +44,7 @@
 - [SpringBoot](https://github.com/devhoody/TIL/blob/main/Spring/SpringBoot.md)
 - [Spring](https://github.com/devhoody/TIL/blob/main/Spring/Spring.md)
 - [MVC](https://github.com/devhoody/TIL/blob/main/Spring/MVC.md)
+- [Thymeleaf](https://github.com/devhoody/TIL/blob/main/Spring/thymeleaf.md)
 
 ### FrontEnd
 
