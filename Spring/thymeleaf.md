@@ -3,6 +3,8 @@
   - [header에 스타일 넣기](#header에-스타일-넣기)
 - [layout만들기](#layout만들기)
   - [thymeleaf layout dialect](#thymeleaf-layout-dialect)
+- [thymeleaf를 이용한 제어문 - 반복문](#thymeleaf를-이용한-제어문---반복문)
+
 
 
 ## HTML파일에 Thymeleaf 지시자 설정
@@ -102,3 +104,7 @@
     ```html
     <div layout:fragment="main">
     ```
+
+## thymeleaf를 이용한 제어문 - 반복문
+
+[Tutorial: Using Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.1/usingthymeleaf.html#iteration)
