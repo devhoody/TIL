@@ -9,6 +9,8 @@
     - [mybatis in spring stater](#mybatis-in-spring-stater)
     - [자동 Boilerplate code 추가 -  Lombok 라이브러리](#자동-boilerplate-code-추가----lombok-라이브러리)
     - [Builder 사용하기](#builder-사용하기)
+  - [menuview 만들기](#menuview-만들기)
+    - [MenuView Entity만들기](#menuview-entity만들기)
 
 
 # Spring boot
@@ -185,3 +187,22 @@
         		return "menu/list"; // template에서 list.html을 찾음.
         	}
         ```
+
+## menuview 만들기
+
+### MenuView Entity만들기
+
+- `@AllArgsConstructor@NoArgsConstructor@Getter@Setter@ToString` ⇒ `@Data` 에 포함되어있는 것!
+- *Entity는 절대로 상속받지 말것!*
+
+```java
+private long id;
+    private String korName;
+    private String engName;
+    private int price;
+    private String img;
+    private Date regDate;
+    private int hit;
+    private long memberId;
+    private int likeCount;
+```
