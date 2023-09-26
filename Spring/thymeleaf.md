@@ -4,6 +4,12 @@
 - [layout만들기](#layout만들기)
   - [thymeleaf layout dialect](#thymeleaf-layout-dialect)
 - [thymeleaf를 이용한 제어문 - 반복문](#thymeleaf를-이용한-제어문---반복문)
+- [데이터 출력 포맷 변환](#데이터-출력-포맷-변환)
+  - [금액 - 3자리마다 콤마 찍기](#금액---3자리마다-콤마-찍기)
+- [페이지 이동하기](#페이지-이동하기)
+  - [list→ detail](#list-detail)
+  - [th를 이용하여 쿼리스트링값 적용하기(th:href)](#th를-이용하여-쿼리스트링값-적용하기thhref)
+  - [디테일에 가져온 쿼리스트링 값에 맞는 정보 구현하기 (th:object)](#디테일에-가져온-쿼리스트링-값에-맞는-정보-구현하기-thobject)
 
 
 
@@ -108,3 +114,47 @@
 ## thymeleaf를 이용한 제어문 - 반복문
 
 [Tutorial: Using Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.1/usingthymeleaf.html#iteration)
+
+## 데이터 출력 포맷 변환
+
+- 숫자 변환하기(numbers)
+    - `#numbers.formatInteger()`
+    - `#numbers.decimal()`
+
+### 금액 - 3자리마다 콤마 찍기
+
+```html
+th:text="${#numbers.formatInteger(qt * 4500, 3, 'COMMA')}"
+```
+
+## 페이지 이동하기
+
+### list→ detail
+
+- 정적인 요소는 퍼블리셔가 담당. 백엔드가 건드리지 않는다.
+    - 동적인 요소만을 th 를 이용해서 작성한다.
+    - a href → 정적 : 퍼블리셔 , th:href → 동적 : 백엔드
+    - `<a href="detail?id=1" th:href="">카페라떼</a>`
+
+### th를 이용하여 쿼리스트링값 적용하기(th:href)
+
+- `@` : 절대경로를 나타내는 기호
+
+```html
+th:href="@{detail(id=${m.id})}"
+```
+
+### 디테일에 가져온 쿼리스트링 값에 맞는 정보 구현하기 (th:object)
+
+- `th:object`
+    - th:obejct란?
+        - view에서 타임리프를 이용하여 데이터를 가져와 지역변수로 활용할 수 있도록 만드는 dialect중 하나로, 한개의 객체 안에 있는 데이터를 th:with 보다 편리하게 쓰게만드는 지역변수 선언 dialect
+    - 하나의 구역에에 쓰이는 값이 한개의 객체에서 가져오는 내용이라면 지역변수로 객체를 선언한다.
+    - 그러면 따로 객체 내 데이터를 가져올 때, `${객체.데이터명}으로` 쓰지 않고 `*{데이터명}` 으로만 쓸수 있어 편리성을 제공한다
+        - 이 때, $ 대신 *사용하는 것에 주의 ⇒ 구역 내에서 전체를 쓰는거니까 `*`라고 이해하면 편할듯
+    
+    ```html
+    <section th:object="${menu}">
+    			<h1 th:text="*{korName}">카페라떼</h1> <!-- ${menu.korName}대신 사용-->
+    			<h2 th:text="*{engName}">Caffe Latte</h2>
+    ```
