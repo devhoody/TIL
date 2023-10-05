@@ -11,6 +11,13 @@
     - [Builder 사용하기](#builder-사용하기)
   - [menuview 만들기](#menuview-만들기)
     - [MenuView Entity만들기](#menuview-entity만들기)
+  - [입력받은 데이터를 저장하기](#입력받은-데이터를-저장하기)
+  - [이미지 입력하기](#이미지-입력하기)
+    - [enctype](#enctype)
+    - [파일 크기 설정 방법](#파일-크기-설정-방법)
+    - [파일 저장 및 저장 위치 지정](#파일-저장-및-저장-위치-지정)
+  - [Properties와 yml](#properties와-yml)
+  - [SSR, CSR](#ssr-csr)
 
 
 # Spring boot
@@ -206,3 +213,156 @@ private long id;
     private long memberId;
     private int likeCount;
 ```
+
+## 입력받은 데이터를 저장하기
+
+- 업무로직은 내가 일하는 내용이니까 **메서드명을 쓰는 용어 그대로 사용**한다.
+- 저장된 것을 확인하는 방법
+    - **예외처리**
+        - 서비스에서 메서드 타입을 `void`로 한다.
+- dao에서 데이터를 넣을 때 사용하는 메서드 : `save`
+    - 왜 insert가 아니고 save?
+        - 요즘은 데이터 저장소가 DBMS뿐만 아니라 클라우드, 빅데이터 등등이 생기면서 저장소에 `저장`한다 라는 의미로 사용된다.
+        - select도 요즘은 find로 사용되는 것도 같은 맥락
+
+## 이미지 입력하기
+
+- redirection 이해 필요
+- 파일 요청방식(enctype) 설정 → 파일 저장 방식 설정
+
+### enctype
+
+- enctype이란?
+    - view에서 쿼리스트링을 통해 입력받을 때, 해당 **입력의 인코딩 방식을 결정**하는 방법.
+- enctype을 쓰는 이유
+    - 기존에 쿼리스트링 → **여러 종류의 데이터를 전송하기위해**
+- 기본타입은 파일을 보낼 수 없다.
+    
+    ```html
+    enctype="application/x-www-form-urlencoded" <!-- 기본타입 -->
+    enctype="multipart/form-data"
+    ```
+    
+- `enctype="multipart/form-data"`는 종류에 상관없이 보낼 수 있음.
+    - 서버에서도 받는 방식을 맞춰야함.⇒스프링부트 최신버젼에서는 이걸 자동으로 설정되어있음.
+    - 기본설정에서 수정 필요한것 : 파일크기
+        - 파일크기가 크면 500 오류 발생!
+        
+        
+        ```xml
+        There was an unexpected error (type=Internal Server Error, status=500).
+        Maximum upload size exceeded
+        org.springframework.web.multipart.MaxUploadSizeExceededException: Maximum upload size exceeded
+        		at
+        ```
+        
+
+### 파일 크기 설정 방법
+
+- 두가지 방법이 있다.
+    - `application.properties`이용
+        - 아래 코드 추가
+            
+            ```xml
+            spring.servlet.multipart.max-file-size=20MB
+            spring.servlet.multipart.max-request-size=25MB
+            spring.servlet.multipart.location -> 잘 안씀
+            spring.servlet.multipart.file-size-threshold -> 잘 안씀
+            ```
+            
+        - file-size와 request-size의 차이
+            - `file-size` : **각각의 파일** 사이즈의 크기 지정
+            - `request-size` : **모든 파일의 총합** 사이즈의 크기 지정
+    - 새로운 파일(`application.yml`) 이용
+        - mybatis, spring 파일 저장 사이즈 등 정의가 가능
+        - **application.properties와 같은 위치(resources)**에 새로운 파일 생성
+        - **공백**에 주의하여 작성
+            
+            ```xml
+            mybatis:
+              configuration:
+                map-underscore-to-camel-case: true
+              mapper-locations: mappers/*Mapper.xml
+              type-aliases-package: kr.co.rland.web.entity
+            
+            spring:
+              servlet:
+                multipart:
+                  max-file-size: 500MB
+                  max-request-size: 500MB
+            ```
+            
+
+### 파일 저장 및 저장 위치 지정
+
+- InputStream, OutputStream을 이용하여 파일 저장 및 파일 위치를 지정할 수 있다.
+    
+    ```java
+    InputStream fis = imgFile.getInputStream();
+    OutputStream fos = new FileOutputStream("/Users/eddy/user/"+ imgFile.getOriginalFilename());
+    
+    int size =0;
+    byte[] bfr = new byte[1024];
+    while((size=fis.read(bfr)) != -1)
+    	fos.write(bfr, 0, size);
+    
+    fis.close();
+    fos.close();
+    ```
+    
+
+## Properties와 yml
+
+- yml의 장점
+    - properties는 **패키지명을 계속 써줘야하는 번거로움이 존재. 이를 공백으로 퉁쳐서 제거해주는 것**이 yml이다.
+- **Spring boot는 properties를 먼저 읽고, yml을 읽는다.**
+- **resources 폴더에 모두 위치**한다.
+- yml은 하부 속성을 **공백**으로 구분, `같은 공백 = 같은 위치`를 나타냄.
+
+
+## SSR, CSR
+
+- **SSR**
+    - 어떤 요청을 하든지 문서를 반응해주는것. 문서를 **`서버 사이드`에서 랜더링**한다.
+    - 페이지의 일부가 변하면 모든걸 **서버쪽에서 책임**
+    - **`GET, POST`**만 존재
+    - 애플리케이션 위치 : `**Server**`
+- **CSR**
+    - 문서를 클라이언트에서 만든다. ⇒ 서버에 데이터를 요청
+        - 페이지의 일부만 바뀔때, 바뀐 부분에 해당하는 데이터만 서버쪽에서 받아서 그 부분만 변환
+            - SSR보다 속도가 빠르다.
+            - 새로고침 형태가 안되니 사용자 입장에서는 부드러움을 느낌.
+        - 예시) 검색, 수량 등
+    - SSR과 마찬가지로 하위 개념을 쿼리스트링으로 받음
+    - GET, POST, PUT 등 여러메소드 존재
+        - POST : 목록만 존재
+    - 어플리케이션이 클라이언트에 있음
+        - 어플리케이션이 클라이언트에 있으니 서버쪽에서 데이터를 끄집어낼 것이 필요! 그것이 데이터 API
+        - 페이지컨트롤러 + **데이터API**
+    
+    # CSR
+    
+    ### 데이터API만들기(apiMenuController)
+    
+    ```java
+    @Controller("apiMenuController")
+    @RequestMapping("/api/menus")
+    public class MenuController {
+    
+        @Autowired
+        private MenuService service;
+    
+        @ResponseBody
+        @GetMapping
+        public List<Menu> list(){
+    
+            List<Menu> list = service.getList();
+            return list;
+        }
+    }
+    ```
+    
+    - 가져오는 데이터 형식 : JASON
+    - **@RestController**
+        - ResponseBody를 안써도 되는것임.
+        - Rest가 뭔데?
