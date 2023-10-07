@@ -54,6 +54,7 @@
 - [JavaScript_Function](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/JS_Function.md)
 - [JavaScript_class](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/JS_class.md)
 - [JavaScript_Image](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/JS_Image.md)
+- [Ajax](https://github.com/devhoody/TIL/blob/main/HTML%2CCSS%2CJS/Ajax.md)
 
 ### CS
 - [InfraArchitecture](https://github.com/devhoody/TIL/blob/main/CS/InfraArchitecture.md)
