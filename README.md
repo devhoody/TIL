@@ -34,6 +34,7 @@
 - [추상화](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%B6%94%EC%83%81%ED%99%94.md)
 - [인터페이스](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4.md)
 - [클래스와 메서드](https://github.com/devhoody/TIL/blob/main/Java/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%20%EB%A9%94%EC%84%9C%EB%93%9C.md)
+- [Optional](https://github.com/devhoody/TIL/blob/main/Java/Optional.md)
 
 ### Servlet
 - [Servlet](https://github.com/devhoody/TIL/blob/main/Servlet/Servlet.md)
@@ -59,6 +60,9 @@
 ### CS
 - [InfraArchitecture](https://github.com/devhoody/TIL/blob/main/CS/InfraArchitecture.md)
 
+### Test
+- [TestCase](https://github.com/devhoody/TIL/blob/main/Test/TestCase.md)
+
 ### 개발자의 자세
 
 - [70세까지 개발자로 사는 법](https://okky.kr/articles/1430828)
@@ -72,6 +76,7 @@
 - [초보몽키님 git 블로그](https://wayhome25.github.io/)
 - [망도님 TIL](https://github.com/mangdo/TIL)
 - [남준님 TIL](https://github.com/namjunemy/TIL)
+
 
 ### 오류해결
 
