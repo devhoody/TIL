@@ -63,7 +63,8 @@
 - `injection 위치`를 설정하는 Annotation
 - 종류 3가지
     - `field injection` ← 뉴렉쌤 추천
-    - **constructor injection**
+    - `**constructor injection**` <- 김영한님 추천
+      - 왜? → 의존관계가 한번 세팅된 이후로는 변경될 가능성이 거의 zero. 세팅 이후 수정 못하도록 생성자 주입으로 관계를 세팅한다.
     - **setter injection**
     - 인젝션 시점에 초기화 등의 조건이 필요할 때 constructor, setter injection 사용.
     
@@ -140,6 +141,25 @@ public class BeanConfig {
 	public List list() {
 		return new ArrayList();
 	}
+}
+```
+- 김영한
+
+```java
+@Bean
+public MemberService memberService(){
+    return new MemberService(memberRepository();
+}
+
+@Bean
+public MemberRepository memberRepository(){
+    return new MemoryMemberRepository();
+}
+
+// 레포지토리 변경시
+@Bean
+public MemberRepository memberRepository(){
+    return new DbMemberRepository(); // 해당 레포지토리만 변경
 }
 ```
 
