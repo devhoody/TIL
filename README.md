@@ -48,7 +48,8 @@
 - [MVC](https://github.com/devhoody/TIL/blob/main/Spring/MVC.md)
 - [Thymeleaf](https://github.com/devhoody/TIL/blob/main/Spring/thymeleaf.md)
 - [Spring Bean](https://github.com/devhoody/TIL/blob/main/Spring/SpringBean.md)
-- 
+- [LifeCycle](https://github.com/devhoody/TIL/blob/main/Spring/LifgCycle.md)
+- [AutoDI](https://github.com/devhoody/TIL/blob/main/Spring/AutoDependencyInjection.md)
 
 ### FrontEnd
 
