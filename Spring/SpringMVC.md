@@ -16,6 +16,8 @@
     - [빈 문자열 처리 및 기본값 등록 - defaultValue](#빈-문자열-처리-및-기본값-등록---defaultvalue)
     - [파라미터를 Map으로 조회하기 - **requestParamMap**](#파라미터를-map으로-조회하기---requestparammap)
   - [@ModelAttribute](#modelattribute)
+- [@RequiredArgsConstructor](#requiredargsconstructor)
+- [@PostConstruct](#postconstruct)
 
 
 # 스프링 MVC - 기본 기능
@@ -265,3 +267,31 @@ public String mappingPath(@PathVariable("userId") String userId,
     - Member 객체 생성
     - 요청 파라미터 이름(name, age)로 Member객체의 프로퍼티를 찾는다. 해당 객체의 Setter를 이용하여 값을 주입한다.
         - 프로퍼티란? - getName, setName 처럼 Getter, Setter 를 말한다.
+
+# @RequiredArgsConstructor
+
+- `final` 이 붙은 멤버변수만 사용해서 생성자를 자동으로 만들어준다.
+
+```java
+@RequiredArgsConstructor
+public class BasicItemController {
+
+    private final ItemRepository itemRepository;
+```
+
+- `final` 이 붙은 ItemRepository의 생성자를 자동으로 생성해준다.
+- 스프링에서는 생성자가 1개일 때, 자동으로 해당 생성자에 Autowired로 의존관계를 주입한다.
+- 따라서 final 키워드를 빼지 말것!
+
+# @PostConstruct
+
+- 테스트용 데이터 추가를 위해 사용하는 어노테이션
+- 해당 빈의 의존관계가 모두 주입된 후, 초기화 용도로 사용된다.
+
+```java
+@PostConstruct
+public void init(){
+    itemRepository.save(new Item("itemA", 10000, 5));
+    itemRepository.save(new Item("itemB", 20000, 10));
+}
+```
