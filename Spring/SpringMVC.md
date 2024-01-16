@@ -16,8 +16,12 @@
     - [빈 문자열 처리 및 기본값 등록 - defaultValue](#빈-문자열-처리-및-기본값-등록---defaultvalue)
     - [파라미터를 Map으로 조회하기 - **requestParamMap**](#파라미터를-map으로-조회하기---requestparammap)
   - [@ModelAttribute](#modelattribute)
-- [@RequiredArgsConstructor](#requiredargsconstructor)
-- [@PostConstruct](#postconstruct)
+  - [PRG Post/Redirect/Get](#prg-postredirectget)
+  - [RedirectAttributes](#redirectattributes)
+- [관련 어노테이션](#관련-어노테이션)
+  - [@RequiredArgsConstructor](#requiredargsconstructor)
+  - [@PostConstruct](#postconstruct)
+
 
 
 # 스프링 MVC - 기본 기능
@@ -268,7 +272,91 @@ public String mappingPath(@PathVariable("userId") String userId,
     - 요청 파라미터 이름(name, age)로 Member객체의 프로퍼티를 찾는다. 해당 객체의 Setter를 이용하여 값을 주입한다.
         - 프로퍼티란? - getName, setName 처럼 Getter, Setter 를 말한다.
 
-# @RequiredArgsConstructor
+
+## PRG Post/Redirect/Get
+
+<aside>
+💡 Post를 이용해서 기존 return 방식으로 템플릿을 조회할 때, 새로고침을 하면 계속 Post 요청이 실시되는 버그가 발생할 수 있다.
+
+```java
+@PostMapping("add")
+public String addItemV4(Item item){
+    Item save = itemRepository.save(item);
+    return "basic/items";
+}
+```
+
+- 새로고침 → 마지막에 한 행동을 다시 하는 것
+</aside>
+
+- 해결방법 → Redirect
+    
+    ```java
+    @PostMapping("add")
+    public String addItemV5(Item item){
+        Item save = itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId();
+    }
+    ```
+    
+    - 마지막 행동을 Get으로 실시하여 새로고침시 Get 요청을 실행함으로써 post 요청을 막을 수 있다.
+    - URL에 변수를 사용하는 것의 문제점
+        - 하지만 여기서 item.getId()를 이용했는데, 이는 URL인코딩이 안되기 때문에 위험하다.
+        - RedirectAttributes 사용
+
+## RedirectAttributes
+
+<aside>
+💡 고객이 저장이 된 것인지 안된것인지 확신이 들지 않음. “저장되었습니다.” 멘트를 넣어줌으로써 고객 UX를 개선할 수 있다.
+
+</aside>
+
+- **RedirectAttributes란?**
+    - **URL 인코딩**과 **pathVariable, 쿼리 파라미터**를 처리해준다.
+- 사용 코드
+    
+    ```java
+    @PostMapping("add")
+    public String addItemV5(Item item, RedirectAttributes redirectAttributes){
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true); // 쿼리스트링으로 들어감
+    
+        return "redirect:/basic/items/{itemId}";
+    }
+    ```
+    
+    - 이전에는 item.getId() 변수를 직접 넣어주었지만, redirectAttributes를 이용해서 URL에 pathVariable 처리를 하였다.
+    - pathVariable 처리가 안된 값(status)은 쿼리 파라미터로 처리된다.
+        - [`http://localhost:8080/basic/items/3?status=true`](http://localhost:8080/basic/items/3?status=true)
+    - **item.html**
+        
+        ```html
+        <div class="py-5 text-center">
+            <h2>상품 상세</h2>
+        </div>
+        
+        <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+        ```
+        
+        - `th:if` : 해당 조건이 참이면 실행
+        - `${param.status}`
+            - param : 타임리프에서 쿼리 파라미터를 쉽게 조회해주는 기능
+        - 이렇게 하면 쿼리 파라미터 속성 중 status가 참일 경우, “저장 완료” 라는 문구가 뜸으로하여 고객 입장에서 저장이 제대로 되었는지 확인이 가능하다.
+    
+    스프링 MVC 구조 이해를 복습하는 것도 추천함
+    
+    - 실무자들 중에서도 스프링MVC의 구조를 정확히 이해한 사람이 별로 없음
+    - 관련 에러에 대해서 어디가 문제인지 잘 알 수 있음.
+    
+    이후
+    
+    - 개발자는 컨트롤러 구현이 20%면 검증이 80%의 업무량을 차지한다.
+    - 예외 처리가 진짜 복잡하다.
+
+
+# 관련 어노테이션 
+## @RequiredArgsConstructor
 
 - `final` 이 붙은 멤버변수만 사용해서 생성자를 자동으로 만들어준다.
 
@@ -283,7 +371,7 @@ public class BasicItemController {
 - 스프링에서는 생성자가 1개일 때, 자동으로 해당 생성자에 Autowired로 의존관계를 주입한다.
 - 따라서 final 키워드를 빼지 말것!
 
-# @PostConstruct
+## @PostConstruct
 
 - 테스트용 데이터 추가를 위해 사용하는 어노테이션
 - 해당 빈의 의존관계가 모두 주입된 후, 초기화 용도로 사용된다.
