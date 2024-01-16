@@ -1,18 +1,29 @@
-- [HTML파일에 Thymeleaf 지시자 설정](#html파일에-thymeleaf-지시자-설정)
-- [header 넣기](#header-넣기)
-  - [header에 스타일 넣기](#header에-스타일-넣기)
-- [layout만들기](#layout만들기)
-  - [thymeleaf layout dialect](#thymeleaf-layout-dialect)
-- [thymeleaf를 이용한 제어문 - 반복문](#thymeleaf를-이용한-제어문---반복문)
-- [데이터 출력 포맷 변환](#데이터-출력-포맷-변환)
-  - [금액 - 3자리마다 콤마 찍기](#금액---3자리마다-콤마-찍기)
-- [페이지 이동하기](#페이지-이동하기)
-  - [list→ detail](#list-detail)
-  - [th를 이용하여 쿼리스트링값 적용하기(th:href)](#th를-이용하여-쿼리스트링값-적용하기thhref)
-  - [디테일에 가져온 쿼리스트링 값에 맞는 정보 구현하기 (th:object)](#디테일에-가져온-쿼리스트링-값에-맞는-정보-구현하기-thobject)
+- [Thymeleaf](#thymeleaf)
+  - [HTML파일에 Thymeleaf 지시자 설정](#html파일에-thymeleaf-지시자-설정)
+  - [header 넣기](#header-넣기)
+    - [header에 스타일 넣기](#header에-스타일-넣기)
+  - [layout만들기](#layout만들기)
+    - [thymeleaf layout dialect](#thymeleaf-layout-dialect)
+  - [thymeleaf를 이용한 제어문 - 반복문](#thymeleaf를-이용한-제어문---반복문)
+  - [데이터 출력 포맷 변환](#데이터-출력-포맷-변환)
+    - [금액 - 3자리마다 콤마 찍기](#금액---3자리마다-콤마-찍기)
+  - [페이지 이동하기](#페이지-이동하기)
+    - [list→ detail](#list-detail)
+    - [th를 이용하여 쿼리스트링값 적용하기(th:href)](#th를-이용하여-쿼리스트링값-적용하기thhref)
+    - [디테일에 가져온 쿼리스트링 값에 맞는 정보 구현하기 (th:object)](#디테일에-가져온-쿼리스트링-값에-맞는-정보-구현하기-thobject)
+- [타임리프 - 스프링 통합과 폼](#타임리프---스프링-통합과-폼)
+  - [입력 폼 처리](#입력-폼-처리)
+  - [체크박스 - 단일](#체크박스---단일)
+    - [`disabled`](#disabled)
+  - [체크박스 - 멀티](#체크박스---멀티)
+    - [@ModelAttribute의 전역화](#modelattribute의-전역화)
+    - [#ids](#ids)
+  - [라디오버튼, 셀렉트박스](#라디오버튼-셀렉트박스)
 - [타임리프 메서드](#타임리프-메서드)
   - [타임리프 리터럴](#타임리프-리터럴)
 
+
+# Thymeleaf
 
 ## HTML파일에 Thymeleaf 지시자 설정
 
@@ -188,7 +199,88 @@ th:href="@{detail(id=${m.id})}"
     
     `<input type="text" class="form-control" placeholder="이름을 입력하세요" id="id" name="id" value="">`
 
+## 체크박스 - 단일
 
+### `disabled`
+
+- 원래 th:if 를 이용해서 해당 조건에 맞으면 체크를 해줘야하는데 타임리프가 이를 한방에 해결해줌.
+- 타임리프가 checked, unchecked를 자동으로 넣어준다.
+    
+    ```html
+    <input type="checkbox" id="open" th:field="${item.open}" class="form-check-input" **disabled**>
+    ```
+    
+    - 페이지 소스에 _open이 자동으로 적용되어있는 것을 볼 수 있다.
+
+**th:field**
+
+- html 체크박스는 체크가 안될 경우, 클라이언트에서 서버에 값 자체를 보내지 않는다.이는 사용자가 의도적으로 체크를 안한건지, 빠뜨리건지 파악하기 힘들다.이 때, 기존 체크박스의 name에 ‘_’을 붙여 hidden 타입으로 전송하면 false로 전송된다.
+    - `<input type="hidden" name="_open" value="on"/>`
+- 위의 코드를 타임리프가 th:field를 통해 자동으로 만들어준다.
+
+**체크박스 체크**
+
+- `open=on&_open=on`
+    - 체크 박스를 체크하면 스프링 MVC가 **open에 있는 값을 사용**
+    - **true 반환**
+- `_open=on`
+    - 체크 박스를 체크하지 않으면 스프링 MVC가 **_open에 있는 값을 사용**
+    - null이 아닌 **false 반환**
+
+## 체크박스 - 멀티
+
+### @ModelAttribute의 전역화
+
+- 여러 페이지에서 동일하게 사용되는 객체를 사용하고자 할 때, 컨트롤러 내 메소드마다 객체를 넣어 일일이 만들어주는 번거로움이 발생한다.
+- 이를 해결하기 위해서 해당 컨트롤러에 @ModelAttribute를 이용해 메소드를 만들면 이를 컨트롤러 내 모든 메소드에서 사용이 가능하다.
+
+```java
+// 자동 ModelAttribute
+
+@ModelAttribute("regions")
+public Map<String, String>regions(){
+    Map<String, String> regions = new LinkedHashMap<>();
+    regions.put("SEOUL", "서울");
+    regions.put("BUSAN", "부산");
+    regions.put("JEJU", "제주");
+    return regions;
+}
+```
+
+### #ids
+
+- th:each를 이용하여 반복된 label의 for와 input의 id가 일치하고자 할 때, for를 직접 입력할 수가 없다. 이 때, for를 id와 일치시켜주는 것이 #ids이다.
+- `**th:for=”${#ids.prev(’itemType’)}”**`
+- **html**
+    
+    ```html
+    <div>
+        <div>상품 종류</div>
+        <div th:each="type : ${itemTypes}" class="form-check form-check-inline">
+            <input type="radio" th:field="*{itemType}" th:value="${type.name()}"
+                   class="form-check-input">
+            <label **th:for="${#ids.prev('itemType')}"** th:text="${type.description}" class="form-check-label">BOOK</label>
+        </div>
+    </div>
+    ```
+    
+- 페이지 소스
+    
+    ```html
+    <div class="form-check form-check-inline">
+        <input type="checkbox" value="SEOUL"
+               class="form-check-input" id="regions1" name="regions"><input type="hidden" name="_regions" value="on"/>
+        <label **for="regions1"**
+               class="form-check-label">서울</label>
+    </div>
+    ```
+    
+    - 페이지 소스를 보면, label의 for와 input의 id가 `regions1`로 동일한 것을 확인할 수 있다.
+
+## 라디오버튼, 셀렉트박스
+
+- 체크 안하면 자동으로 null값 반환
+- 라디오버튼, 셀렉트박스 모두 체크박스와 동일한 원리를 갖고있다.
 
 # 타임리프 메서드
 
