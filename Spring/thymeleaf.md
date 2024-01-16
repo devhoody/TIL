@@ -10,7 +10,8 @@
   - [list→ detail](#list-detail)
   - [th를 이용하여 쿼리스트링값 적용하기(th:href)](#th를-이용하여-쿼리스트링값-적용하기thhref)
   - [디테일에 가져온 쿼리스트링 값에 맞는 정보 구현하기 (th:object)](#디테일에-가져온-쿼리스트링-값에-맞는-정보-구현하기-thobject)
-
+- [타임리프 메서드](#타임리프-메서드)
+  - [타임리프 리터럴](#타임리프-리터럴)
 
 
 ## HTML파일에 Thymeleaf 지시자 설정
@@ -158,3 +159,50 @@ th:href="@{detail(id=${m.id})}"
     			<h1 th:text="*{korName}">카페라떼</h1> <!-- ${menu.korName}대신 사용-->
     			<h2 th:text="*{engName}">Caffe Latte</h2>
     ```
+
+# 타임리프 - 스프링 통합과 폼
+
+## 입력 폼 처리
+
+- 기존의 html에서 타임리프의 입력 폼 기능을 적용해보자.
+- `th:object`, `th:field` 이용
+    - `th:obejct` : 커맨드 객체를 지정
+    - `th:field` : id, name, value를 자동으로 입력해줌.
+    - `*{}` : th:object 에서 지정한 객체에 접근하는 식
+        - th:object=”${item}” ~ *{name} : item 객체의 name 속성 값을 조회한다.
+- 사용 전
+
+```html
+<form action="item.html" th:action method="post">
+	<input type="text" id="itemName" name="itemName" th:value="${item.itemName}">
+```
+
+- 사용 후
+
+```html
+<form action="item.html" th:action th:object="${item}" method="post">
+	<input type="text" th:field="*{id}">
+```
+
+- 페이지 소스
+    
+    `<input type="text" class="form-control" placeholder="이름을 입력하세요" id="id" name="id" value="">`
+
+
+
+# 타임리프 메서드
+
+## 타임리프 리터럴
+
+`th:onclick="|location.href='@{/basic/items/add}'|"`
+
+- 원래는 타임리프에서 문자와 표현식 등은 분리되어 있기 때문에 더해서 사용해야 한다.
+- 하지만 리터럴을 사용하면 더하기를 하지 않고 쉽게 문자로 치환되어 사용된다.
+
+`th:action`
+
+- HTML form에서 action에 값이 없으면 현재 URL에 데이터를 전송한다.
+- 상품 등록 폼의 URL과 실제 상품 등록을 처리하는 URL을 똑같이 맞추고 HTTP 메서드로 두 기능을 구분한다.
+    - 상품 등록 폼: GET ``/basic/items/add``
+    - 상품 등록 처리: POST ``/basic/items/add``
+- 이렇게 하면 하나의 URL로 등록 폼과, 등록 처리를 깔끔하게 처리할 수 있다.
