@@ -16,12 +16,12 @@
     - [빈 문자열 처리 및 기본값 등록 - defaultValue](#빈-문자열-처리-및-기본값-등록---defaultvalue)
     - [파라미터를 Map으로 조회하기 - **requestParamMap**](#파라미터를-map으로-조회하기---requestparammap)
   - [@ModelAttribute](#modelattribute)
+    - [@ModelAttribute의 전역화](#modelattribute의-전역화)
   - [PRG Post/Redirect/Get](#prg-postredirectget)
   - [RedirectAttributes](#redirectattributes)
 - [관련 어노테이션](#관련-어노테이션)
   - [@RequiredArgsConstructor](#requiredargsconstructor)
   - [@PostConstruct](#postconstruct)
-
 
 
 # 스프링 MVC - 기본 기능
@@ -272,6 +272,23 @@ public String mappingPath(@PathVariable("userId") String userId,
     - 요청 파라미터 이름(name, age)로 Member객체의 프로퍼티를 찾는다. 해당 객체의 Setter를 이용하여 값을 주입한다.
         - 프로퍼티란? - getName, setName 처럼 Getter, Setter 를 말한다.
 
+### @ModelAttribute의 전역화
+
+- 여러 페이지에서 동일하게 사용되는 객체를 사용하고자 할 때, 컨트롤러 내 메소드마다 객체를 넣어 일일이 만들어주는 번거로움이 발생한다.
+- 이를 해결하기 위해서 해당 컨트롤러에 @ModelAttribute를 이용해 메소드를 만들면 이를 컨트롤러 내 모든 메소드에서 사용이 가능하다.
+
+```java
+// 자동 ModelAttribute
+
+@ModelAttribute("regions")
+public Map<String, String>regions(){
+    Map<String, String> regions = new LinkedHashMap<>();
+    regions.put("SEOUL", "서울");
+    regions.put("BUSAN", "부산");
+    regions.put("JEJU", "제주");
+    return regions;
+}
+```
 
 ## PRG Post/Redirect/Get
 
