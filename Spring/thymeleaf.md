@@ -21,6 +21,7 @@
   - [라디오버튼, 셀렉트박스](#라디오버튼-셀렉트박스)
 - [타임리프 메서드](#타임리프-메서드)
   - [타임리프 리터럴](#타임리프-리터럴)
+  - [타임리프 메시지](#타임리프-메시지)
 
 
 # Thymeleaf
@@ -298,3 +299,19 @@ public Map<String, String>regions(){
     - 상품 등록 폼: GET ``/basic/items/add``
     - 상품 등록 처리: POST ``/basic/items/add``
 - 이렇게 하면 하나의 URL로 등록 폼과, 등록 처리를 깔끔하게 처리할 수 있다.
+  
+## 타임리프 메시지
+
+- `#{…}`을 이용하면 스프링의 메시지를 편리하게 조회 가능하다.
+- 예시
+    
+    ```html
+    <h2 th:text="#{page.addItem}">상품 등록 폼</h2>
+    <label for="price" th:text="#{label.item.price}">가격</label>
+    <input ... th:placeholder="#{placeholder.price}" placeholder="가격을 입력하세요">
+    ```
+    
+    - html에서 #{}을 이용하면 해당 위치에 언어에 따라 설정된 메시지가 출력된다.
+    - `#{page.addItem}` : 한글 → `상품 등록`, 영어 → `Item Add`
+- 주 사용처
+    - 스프링 메시지, 국제화 처리
