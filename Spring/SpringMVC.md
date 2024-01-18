@@ -19,6 +19,8 @@
     - [@ModelAttribute의 전역화](#modelattribute의-전역화)
   - [PRG Post/Redirect/Get](#prg-postredirectget)
   - [RedirectAttributes](#redirectattributes)
+- [메시지, 국제화](#메시지-국제화)
+  - [국제화](#국제화)
 - [관련 어노테이션](#관련-어노테이션)
   - [@RequiredArgsConstructor](#requiredargsconstructor)
   - [@PostConstruct](#postconstruct)
@@ -370,6 +372,53 @@ public String addItemV4(Item item){
     
     - 개발자는 컨트롤러 구현이 20%면 검증이 80%의 업무량을 차지한다.
     - 예외 처리가 진짜 복잡하다.
+
+# 메시지, 국제화
+
+> 기획자가 기존의 상품명이라는 이름을 상품이름으로 변경해달라고 요청한다면? 그 양이 수천개라면 어떻게 변경할까?
+> 
+- 메시지 기능 : 다양한 메시지를 한 곳에서 관리하도록 하는 기능
+
+**message.properties**
+
+```xml
+label.item=상품
+label.item.id=상품 ID 
+label.item.itemName=상품명
+label.item.price=가격
+label.item.quantity=수량
+```
+
+## 국제화
+
+메시지 파일을 각 나라별로 결도로 관리하는 것
+
+**message_en.properties**
+
+```xml
+label.item=Item
+label.item.id=Item ID
+label.item.itemName=Item Name
+label.item.price=price
+label.item.quantity=quantity
+```
+
+**한국인지 영어권인지 인식하는 방법**
+
+1. HTTP : `‘accept-language’` 헤더 값 이용
+2. 사용자가 직접 페이지에서 언어 선택 후 `쿠키` 이용
+
+스프링은 자동으로 기본적인 메시지와 국제화 기능을 지원한다.
+
+**스프링 부트 메시지 소스 설정**
+
+- **application.properties**
+    
+    `spring.messages.basename=messages,config.i18n.messages`
+    
+- 스프링 부트 메시지 기본값
+    
+    `spring.messages.basename=messages`
 
 
 # 관련 어노테이션 
