@@ -19,6 +19,11 @@
     - [@ModelAttribute의 전역화](#modelattribute의-전역화)
   - [PRG Post/Redirect/Get](#prg-postredirectget)
   - [RedirectAttributes](#redirectattributes)
+- [HTTP 요청 메세지 - 단순텍스트](#http-요청-메세지---단순텍스트)
+  - [HttpEntity](#httpentity)
+  - [RequestEntity, ResponseEntity](#requestentity-responseentity)
+    - [**RequestEntity**](#requestentity)
+    - [**ResponseEntity**](#responseentity)
 - [메시지, 국제화](#메시지-국제화)
   - [국제화](#국제화)
 - [MVC Validation](#mvc-validation)
@@ -388,6 +393,42 @@ public String addItemV4(Item item){
     
     - 개발자는 컨트롤러 구현이 20%면 검증이 80%의 업무량을 차지한다.
     - 예외 처리가 진짜 복잡하다.
+
+# HTTP 요청 메세지 - 단순텍스트
+
+## HttpEntity
+
+- **HttpEntity란?**
+    - Http를 통해 전달되는 **header, body 정보를 담은 객체**
+- **HttpEntity 사용 이유**
+    - HTTP header, body 정보를 편리하게 조회한다.
+- **HttpEntity 기능**
+    - 메시지 바디 정보를 직접 조회 → `getBody()`
+    - 요청 파라미터를 조회하는 기능과 관계가 없다. `@RequestParam`, `@PathVariable` x
+    - **응답에도 사용이 가능하다.**
+        - 메시지 바디에 정보를 직접 반환
+        - 헤더 정보 포함 가능
+        - view 조회 x
+
+## RequestEntity, ResponseEntity
+
+- HttpEntity를 상속받아 추가적인 기능을 제공하는 RequestEntity와 ResponseEntity가 있다.
+
+### **RequestEntity**
+
+- `HttpMethod`, `url 정보`가 추가, 요청에서 사용
+
+### **ResponseEntity**
+
+- 응답에서 http상태 코드를 설정할 수 있다.
+- 예시
+    
+    ```java
+    ResponseEntity.ok()
+    		  .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+    		  .body(resource);
+    ```
+
 
 # 메시지, 국제화
 
