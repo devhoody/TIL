@@ -42,6 +42,7 @@
     - [**원인**](#원인)
     - [**해결방법**](#해결방법)
     - [**결과**](#결과)
+  - [`UrlResource`](#urlresource)
 - [관련 어노테이션](#관련-어노테이션)
   - [@RequiredArgsConstructor](#requiredargsconstructor)
   - [@PostConstruct](#postconstruct)
@@ -741,6 +742,25 @@ objectName : @ModelAttribute
 <img width="589" alt="스크린샷 2024-01-23 오후 9 05 31" src="https://github.com/devhoody/TIL/assets/124743189/af64ef27-775f-421c-930b-1b499a24a3a4">
 
 - 구글이나 무료 배포 사진을 다운받을 때, 가끔 이렇게 암호화된 파일명이 나오는 것을 보았는데, 그 이유를 이제야 알 것 같다. 또 하나 배웠다.
+
+
+## `UrlResource`
+
+- urlResource란?
+    - Resource 인터페이스의 구현 클래스중 하나
+        - Resource : 어플리케이션에서 사용하는 리로스(파일, 클래스 패스 등)을 추상화한 인터페이스
+    - UrlResource란,  URL을 기반으로 리소스를 다루는 Resource 인터페이스의 구현 클래스
+- urlResource의 생성
+    
+    ```java
+    
+    UrlResource resource = new UrlResource(new URL("http://example.com/data.txt"));
+    UrlResource resource = new UrlResource("classpath:config/settings.properties");
+    UrlResource resource = new UrlResource("file:" + fileStore.getFullPath(storeFilename));
+    ```
+    
+    - URL로부터 직접 resource를 받거나 클래스 패스, 파일 등으로 전달받을 수 있다.
+
 
 
 
