@@ -4,6 +4,22 @@
     - [`errors?`](#errors)
   - [`BindingResult`](#bindingresult)
     - [`#fields`](#fields)
+  - [BindingResult2](#bindingresult2)
+    - [BindingResult에 검증 오류 적용 3가지](#bindingresult에-검증-오류-적용-3가지)
+    - [BindingResult와 Errors](#bindingresult와-errors)
+  - [FieldError, ObjectError](#fielderror-objecterror)
+    - [스프링 바인딩 오류시 처리](#스프링-바인딩-오류시-처리)
+  - [오류 코드와 메시지 처리](#오류-코드와-메시지-처리)
+  - [오류 코드와 메시지 처리2](#오류-코드와-메시지-처리2)
+    - [rejectValue(), reject()](#rejectvalue-reject)
+  - [오류 코드와 메시지 처리3](#오류-코드와-메시지-처리3)
+  - [MessageCodesResolver](#messagecodesresolver)
+    - [DefaultMessageCodesResolver 메시지 생성방법](#defaultmessagecodesresolver-메시지-생성방법)
+    - [동작방식](#동작방식)
+  - [오류코드와 메시지 처리5](#오류코드와-메시지-처리5)
+    - [errors.properties 작성 요령](#errorsproperties-작성-요령)
+  - [스프링이 직접 만든 오류 메시지 처리(오류코드와 메시지 처리6)](#스프링이-직접-만든-오류-메시지-처리오류코드와-메시지-처리6)
+    - [오류 메시지 수정 방법](#오류-메시지-수정-방법)
 
 
 # SpringMVC - Validation
@@ -222,3 +238,203 @@ public String addItem(**@ModelAttribute Item item, BindingResult bindingResult**
 ### `#fields`
 
 - **`BindingResult`가 제공하는 검증 오류에 접근**을 해주는 타임리프 제공 기능
+
+## BindingResult2
+
+- `BindingResult 유무`에 따른 타입 오류페이지 전환 차이
+    - **있을 때** : `오류 페이지 이동 x`
+    - **없을 때** : `400 오류 페이지 이동`
+
+### BindingResult에 검증 오류 적용 3가지
+
+1. `@ModelAttribute`의 객체에 타입 오류 같은 바인딩 오류시 **스프링이 FieldError를 직접 생성**하여 `BindingResult`에 넣어준다.
+2. **개발자가 직접 넣는다.**
+3. **Validator**를 사용한다.
+
+### BindingResult와 Errors
+
+- BindingResult는 Errors를 상속 받는 인터페이스
+    - Errors는 단순한 오류 저장 기능만 제공, BindingResult가 더 많은 기능을 제공한다.
+    - BindingResult를 더 많이 사용한다.
+
+## FieldError, ObjectError
+
+- 오류시 사용자 입력 결과를 FieldError와 ObjectError가 갖고 있는다.
+- rejectedValue : 오류 발생시 사용자 입력 값을 저장하는 필드
+- `th:Field` : 정상 출력인 겨우 model에 있는 값을 사용하지만, 오류가 발생하면 FieldError에 담기 ㄴ값을 사용한다.
+
+### 스프링 바인딩 오류시 처리
+
+- 타입 오류같은 바인딩 오류시 스프링은 FieldError를 생성한다. 생성한 FieldError를 BindingResult에 담고나서 컨트롤러를 호출한다.
+
+## 오류 코드와 메시지 처리
+
+- 오류 메시지를 한곳에서 일괄적으로 관리하면 좋다.
+    
+    `bindingResult.addError(new FieldError("item", "itemName", item.getItemName(),false, **null, null, "상품 이름은 필수입니다."**));`
+    
+- **`errors.properties`,`codes`, `arguments` 이용**
+
+## 오류 코드와 메시지 처리2
+
+- ‘FieldError’, ‘ObjectError’ 다루기 너무 번거롭다.
+- 오류 코드도 좀더 자동화 하기
+
+### rejectValue(), reject()
+
+```java
+//rejectValue()
+bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
+
+//reject()
+bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+```
+
+- `rejectValue()`
+    - `field` : field명
+    - `errorCode` : 오류코드
+    - `errorArgs` : 오류 메시지에서 필요한 치환 값, {0},{1} 등
+    - `defaultMessage` : 기본 메시지,
+- `reject()`
+    - `errorCode`, `errorArgs`, `defaultMessage`
+- FieldError를 직접 넣어줄때는 오류 코드는 ‘range.item.price’를 모두 작성해주어야했다. rejectValue()를 이용하면 앞의 오류코드인 ‘range’만으로 메시지를 출력할 수 있다.
+
+## 오류 코드와 메시지 처리3
+
+> 디테일한 오류 메시지나 간단한 오류메시지로 단계별로 사용할 수 있다.
+> 
+- 범용적인 단순오류 메시지부터 범용적이진 않은 디테일한 오류 메시지 순서로 사용하는 것이 좋다.
+    - ***범용적 → 디테일***
+- ‘`required`’를 `errorcode`로 넣으면, 처음에는 **디테일한 오류 메시지를 찾고 다음으로 단순 메시지를 찾는다.**
+- ***properties만으로도 모든 메시지를 관리할 수 있다.***
+
+**errors.properties**
+
+```java
+#Level1
+required.item.itemName=상품 이름은 필수입니다.
+range.item.price=가격은 {0} ~ {1} 까지 허용합니다.
+max.item.quantity=수량은 최대 {0} 까지 허용합니다.
+totalPriceMin=가격 * 수량의 합은 {0}원 이상이어야 합니다. 현재 값 = {1}
+
+#Level2
+required = 필수 값 입니다.
+range = 범위 오류입니다.
+max = 최대값 오류입니다.
+```
+
+## MessageCodesResolver
+
+> required만 넣엇는데 어떻게 상세메시지와 단순메시지 둘다 가능할까?
+> 
+- **MessageCodesResolver란?**
+    - **검증 오류 코드로 메시지 코드를 작성**하는 인터페이스
+    - `DefaultMessageCodesResolver` : 구현 객체
+
+### DefaultMessageCodesResolver 메시지 생성방법
+
+- 객체오류
+    - 객체 오류의 경우 다음 순서로 2가지 생성
+        - 1.: `code + "." + object name`
+        - 2.: `code`
+    - 코드
+        
+        ```java
+        String[] messageCodes = codesResolver.resolveMessageCodes("required", "item");
+        ```
+        
+        1. `required.item`
+        2. `required`
+- 필드오류
+    - 필드 오류의 경우 다음 순서로 4가지 생성
+        1. `: code + "." + object name + "." + field`
+        2. `code + "." + field`
+        3. `code + "." + field type`
+        4. `code`
+    - 코드
+        
+        ```java
+        String[] messageCodes = codesResolver.resolveMessageCodes("requried", "item", "itemName", String.class);
+        ```
+        
+        1. `required.item.itemName`
+        2. `requried.itemName`
+        3. `required.java.lang.String`
+        4. `required`
+
+### 동작방식
+
+- `rejectValue()`, `reject()`는 내부에서 `MessageCodesResolver`를 사용한다.
+- FieldError, ObjectError의 생성자를 보면, 오류 코드가 하나가 아니라 배열을 통해 여러 오류 코드가 들어간다.
+
+## 오류코드와 메시지 처리5
+
+- `MessageCodesResolver`는 **구체적인것 → 범용적인 순서**로 메시지 코드를 만든다.
+    - `required.item.itemName` →… → `required`
+
+### errors.properties 작성 요령
+
+1. `ObjectError`와 `FieldError`를 구분하여 작성한다.
+2. **level1(구체적)부터 범용적순서**로 단계별로 작성한다.
+
+**errors.properties**
+
+```xml
+**# ObjectError
+
+#level-1
+totalPriceMin.item = 상품의 가격 * 수량의 합은 {0}원 이상이어야 합니다. 현재 값 = {1}
+#level-2
+totalPriceMin = 전체 가격은 {0}원 이상이어야 합니다. 현재 값 = {1}
+
+# FieldError
+
+# level-1
+required.item.itemName = 상품 이름을 입력해주세요.
+range.item.price = 가격은 {0} ~ {1} 까지 허용합니다.
+max.item.quantity = 수량은 최대 {0} 까지 허용합니다. 
+# level-2
+# level-3
+required.java.lang.String = 필수 문자입니다.
+range.java.lang.String = {0} ~ {1} 까지의 문자를 입력해주세요.
+range.java.lang.Integer = {0} ~ {1} 까지의 숫자를 입력해주세요.
+max.java.lang.Integer = {0} 까지의 숫자를 허용합니다.
+max.java.lang.String = {0} 까지의 문자를 허용합니다.
+
+# level-4
+required = 필수 값 입니다.**
+```
+
+## 스프링이 직접 만든 오류 메시지 처리(오류코드와 메시지 처리6)
+
+- **검증 오류코드 종류 2가지**
+    - **개발자가 직접 설정**한 오류 코드
+    - **스프링이 직접 검증 오류에 추가**한 경우(타입 오류 등)
+- 스프링이 직접 만든 오류의 경우, 오류 메시지는 **스프링이 만든 메시지**가 출력된다.
+    
+    <img width="547" alt="1" src="https://github.com/devhoody/TIL/assets/124743189/7e5a5a50-a419-4c24-9007-2898a8f87f33">
+
+    
+
+### 오류 메시지 수정 방법
+
+- 타입 오류가 발생하면 다음과 같이 스프링이 `MessageCodesResolver`를 이용하여 다음과 같은 codeName이 출력되는 것을 알 수 있다.
+    - `typeMismatch.item.price` `typeMismatch.price` `typeMismatch.java.lang.Integer` `typeMismatch`
+        
+        <img width="1244" alt="2" src="https://github.com/devhoody/TIL/assets/124743189/720348b8-55c8-4b1b-aa2f-d390c79e4bff">
+        
+    - 스프링은 타입 오류가 발생하면 `typeMismatch`라는 오류코드를 사용한다.
+
+**error.properties**
+
+```xml
+typeMismatch.java.lang.Integer=숫자를 입력해주세요.
+typeMismatch=타입 오류입니다.
+```
+
+- 실행결과
+    
+    <img width="547" alt="3" src="https://github.com/devhoody/TIL/assets/124743189/cc110bb0-7b01-4097-8157-9c9c7f657fe7">
+
+    
+    - 내가 지정한 오류 메시지가 출력되는 것을 확인할 수 있다.
