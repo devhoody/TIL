@@ -20,6 +20,10 @@
     - [errors.properties 작성 요령](#errorsproperties-작성-요령)
   - [스프링이 직접 만든 오류 메시지 처리(오류코드와 메시지 처리6)](#스프링이-직접-만든-오류-메시지-처리오류코드와-메시지-처리6)
     - [오류 메시지 수정 방법](#오류-메시지-수정-방법)
+- [Validator 분리](#validator-분리)
+- [Validator 분리2](#validator-분리2)
+  - [`@Validated`](#validated)
+    - [@Validated, @Valid](#validated-valid)
 
 
 # SpringMVC - Validation
@@ -438,3 +442,133 @@ typeMismatch=타입 오류입니다.
 
     
     - 내가 지정한 오류 메시지가 출력되는 것을 확인할 수 있다.
+
+
+# Validator 분리
+
+> 복잡한 검증 로직을 별도의 클래스로 분리하자.
+> 
+
+**ItemValidator**
+
+```java
+@Component
+public class ItemValidator implements Validator {
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return Item.class.isAssignableFrom(clazz);
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        Item item = (Item)target;
+        //이름 검증
+        if(!StringUtils.hasText(item.getItemName())){
+            errors.rejectValue("itemName", "required");
+        }
+        //가격 검증
+        if(item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000){
+            errors.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
+        }
+
+        //수량 검증
+        if(item.getQuantity() == null || item.getQuantity() >9999){
+            errors.rejectValue("quantity", "max", new Object[]{9999}, null);
+        }
+
+        // 가격 * 수량 검증
+        if(item.getPrice() != null && item.getQuantity() != null){
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if(resultPrice < 10000){
+                errors.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+    }
+}
+```
+
+- 스프링은 체계적인 검증을 위해 다음 인터페이스를 제공한다.
+    
+    ```java
+    public interface Validator {
+         boolean supports(Class<?> clazz);
+         void validate(Object target, Errors errors);
+    }
+    ```
+    
+    - `supports()` : 해당 **검증기를 지원하는 여부 확인**
+    - `validate(Object target, Errors errors)` : **검증 대상 객체**와 **bindingResult**
+
+**ItemController - addFormV5**
+
+```java
+public class ValidationItemControllerV2 {
+
+	**private final ItemValidator itemValidator;**
+
+	@PostMapping("/add")
+    public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+        **itemValidator.validate(item, bindingResult);**
+
+        // 검증 실패시 되돌리기
+        if(bindingResult.hasErrors()){
+            log.info("errors = {}", bindingResult);
+            return "/validation/v2/addForm";
+        }
+
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+}
+```
+
+- 기존에 있던 검증로직을 `ItemValidator`로 이동.
+- `ItemValidator`를 Autowired하여 컨트롤러에 주입한다.
+
+# Validator 분리2
+
+- `WebDataBinder`를 이용하면 스프링의 추가적인 도움을 받을 수 있다.
+    - `WebDataBinder` : 스프링의 파라미터 바인딩 역할과 검증 기능을 내부에 포함하고있다.
+
+**ItemController - addFormV6**
+
+```java
+**@InitBinder
+ public void init(WebDataBinder dataBinder) {
+     log.info("init binder {}", dataBinder);
+     dataBinder.addValidators(itemValidator);
+ }**
+
+@PostMapping("/add")
+public String addItemV6(**@Validated** @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+    // 검증 실패시 되돌리기
+    if(bindingResult.hasErrors()){
+        log.info("errors = {}", bindingResult);
+        return "/validation/v2/addForm";
+    }
+
+    Item savedItem = itemRepository.save(item);
+    redirectAttributes.addAttribute("itemId", savedItem.getId());
+    redirectAttributes.addAttribute("status", true);
+    return "redirect:/validation/v2/items/{itemId}";
+}
+```
+
+- 컨트롤러에 다음처럼 `WebDataBinder`에 우리가 만든 검증기를 추가하면 컨트롤러가 호출될 때마다 자동으로 검증을 한다.
+
+## `@Validated`
+
+- 검증기를 실행하라는 애노테이션
+- `WebDataBinder`에 등록한 검증기를 실행한다.
+- 여러 검증기를 등록할 경우는 어떻게 특정 검증기를 찾을까? → Validator의 `support()` 사용
+- `support(Item.class)`
+    - `ItemValidator`에 `support()`에 `Item.class`를 넣었기 때문에 **ItemValidator의 validate()가 호출된다.**
+
+### @Validated, @Valid
+
+- `@Validated` : **스프링** 전용 검증 애노테이션
+- `@Valid` : **자바** 표준 검증 애노테이션
