@@ -349,7 +349,15 @@ WHERE NUM BETWEEN 6 AND 10;// NUM 별칭을 이용하여 ROWNUM 연결.
         
         <img width="957" alt="6" src="https://github.com/devhoody/TIL/assets/124743189/aa833270-f2e1-490f-a617-ed80e79a26d3">
 
-        
+# COUNT
+
+## COUNT(*)과 COUNT(1), COUNT(column)의 차이점
+
+- COUNT(*)과 COUNT(1)은 차이점이 없다.
+- COUNT(*), COUNT(1) : NULL값 및 중복 값을 포함하여 행 카운트
+- COUNT(column) : column이 NULL을 제외하고 행 카운트
+- COUNT(DISTINCT column) : column이 NULL이 아닌 UNIQUE(고유키)값 만을 카운트
+
 
 ### Reference*
 
