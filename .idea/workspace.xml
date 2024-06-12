@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="107ca0cc-758d-462c-be4e-b9e43dd1f001" name="Changes" comment="docs: 컴파일, 메모리(메모리 주소), 코테(다트게임)" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2fm8sX3GwFZWwHIEaqsWUyHmRjM" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="showScratchesAndConsoles" value="false" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="107ca0cc-758d-462c-be4e-b9e43dd1f001" name="Changes" comment="" />
+      <created>1714395099372</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714395099372</updated>
+      <workItem from="1714395100574" duration="33000" />
+      <workItem from="1714460845250" duration="46000" />
+      <workItem from="1714479032818" duration="1496000" />
+      <workItem from="1714524335113" duration="62000" />
+      <workItem from="1714570049864" duration="28000" />
+      <workItem from="1714570080269" duration="263000" />
+      <workItem from="1714570346753" duration="184000" />
+      <workItem from="1714607170221" duration="50000" />
+      <workItem from="1714629485613" duration="407000" />
+      <workItem from="1714717877229" duration="18000" />
+      <workItem from="1716299061532" duration="47000" />
+      <workItem from="1716338057328" duration="18000" />
+      <workItem from="1716380631007" duration="65000" />
+      <workItem from="1716424253614" duration="6000" />
+      <workItem from="1716644079545" duration="52000" />
+      <workItem from="1716703785266" duration="92000" />
+      <workItem from="1716856296432" duration="116000" />
+      <workItem from="1716871166841" duration="9000" />
+      <workItem from="1716903432888" duration="446000" />
+      <workItem from="1716949267503" duration="204000" />
+      <workItem from="1716987958923" duration="755000" />
+      <workItem from="1717156935200" duration="638000" />
+      <workItem from="1717417809391" duration="156000" />
+      <workItem from="1717479770129" duration="23000" />
+      <workItem from="1717596134919" duration="475000" />
+      <workItem from="1717596622228" duration="485000" />
+      <workItem from="1717739397329" duration="35000" />
+      <workItem from="1717754752316" duration="366000" />
+      <workItem from="1718007594861" duration="503000" />
+      <workItem from="1718019954108" duration="5000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat : add TIL 가이드">
+      <option name="closed" value="true" />
+      <created>1714395125621</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714395125622</updated>
+    </task>
+    <task id="LOCAL-00002" summary="docs: 컴파일, 메모리(메모리 주소), 코테(다트게임)">
+      <option name="closed" value="true" />
+      <created>1714480522128</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714480522128</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat : add TIL 가이드" />
+    <MESSAGE value="docs: 컴파일, 메모리(메모리 주소), 코테(다트게임)" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs: 컴파일, 메모리(메모리 주소), 코테(다트게임)" />
+  </component>
+</project>
